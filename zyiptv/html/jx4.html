@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>播放器</title>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+</head>
+<body>
+    <h1>播放器</h1>
+    <video id="my-video" class="video-js" controls width="800" height="450">
+        <source src="http://218.87.75.64:8008/rtp/239.252.220.242:5140" type="application/x-mpegURL">
+    </video>
+
+    <script>
+        const player = videojs('my-video');
+    </script>
+</body>
+</html>
