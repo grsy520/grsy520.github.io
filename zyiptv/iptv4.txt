@@ -34,7 +34,7 @@ CCTV14,http://www.lizhinas.top:1009/rtp/239.252.220.92:5140
 CCTV15,http://www.lizhinas.top:1009/rtp/239.252.219.79:5140
 CCTV16,http://www.lizhinas.top:1009/rtp/239.252.220.237:5140
 CCTV17,http://www.lizhinas.top:1009/rtp/239.252.220.192:5140
-CCTV4K,http://aiony.top:35455/bst/cctv4k@15000000.m3u8
+CCTV4K,http://www.lizhinas.top:1009/rtp/239.252.219.60:5140
 
 
 标清央视,#genre#
@@ -182,6 +182,9 @@ IPTV法治,http://218.87.75.64:8008/rtp/239.252.220.74:5140
 春晚1988,https://txmov2.a.kwimgs.com/bs3/video-hls/5216575810935394655_hlsb.m3u8
 1983,https://alimov2.a.kwimgs.com/upic/2022/01/31/15/BMjAyMjAxMzExNTU5MTRfNDAzMDAxOTlfNjYyNzMxNjcwMjBfMF8z_b_Beb3bda599f76c60c463c433ca7460153.mp4
 春晚2024,https://p2.bdstatic.com/rtmp.liveshow.lss-user.baidubce.com/live/stream_bduid_6488563992_8982723413/merged_1707497046297_88536_25144_41936.m3u8
+
+APK测试,#genre#
+MT,https://p3-flow-download-sign.byteimg.com/tos-cn-i-ik7evvg4ik/67ff237cd5eb48b6952d94c952cf071a.apk?attname=MT2.18.5.apk&rk3s=6823e3d0&x-expires=1753601401&x-signature=9ufFcEJzpbddZp6fR84YTXl4DtA%3D
 
 
 
