@@ -1,13 +1,8 @@
 (偷窥文件我直接搓倒你前系十八胎祖宗个娘)
-2025.8.1,#genre#
+2025.8.3,#genre#
 软件仅供学习使用,7
 请在二十四小时内,8
 删除本软件,8
-密码列表,9
-央视付费频道,7
-8888,8
-江西,/
-暂时不放出密码,2
 作者qq联系方式,5
 2579610865,000
 频道不能播放,
@@ -94,7 +89,7 @@ CHC家庭电影,http://www.lizhinas.top:1009/rtp/239.252.219.84:5140
 江西移动电视频道,http://www.lizhinas.top:1009/rtp/239.252.220.241:5140
 江西教育频道,http://www.lizhinas.top:1009/rtp/239.252.219.115:5140
 
-央视付费频道_8888,#genre#
+央视付费频道,#genre#
 世界地理,http://www.lizhinas.top:1009/rtp/239.252.219.93:5140
 第一剧场,http://www.lizhinas.top:1009/rtp/239.252.219.86:5140
 风云音乐,http://www.lizhinas.top:1009/rtp/239.252.219.87:5140
@@ -138,4 +133,4 @@ CCTV4K,http://www.lizhinas.top:1009/rtp/239.252.219.60:5140
 百姓健康,http://www.lizhinas.top:1009/rtp/239.252.219.146:5140
 好学生,http://www.lizhinas.top:1009/rtp/239.252.220.90:5140
 解密,http://www.lizhinas.top:1009/rtp/239.252.220.209:5140
-爱上4Khttp://www.lizhinas.top:1009/rtp/239.252.220.212:5140
+爱上4K,http://www.lizhinas.top:1009/rtp/239.252.220.212:5140
