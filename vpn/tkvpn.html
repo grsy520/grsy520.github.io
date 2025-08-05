@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>服务开启演示</title>
+    <title>服务开启</title>
     <style>
         body {
             font-family: 'Microsoft YaHei', sans-serif;
@@ -62,6 +62,12 @@
             margin: 0 auto 15px;
         }
         
+        .error-icon {
+            color: #f44336;
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -69,21 +75,35 @@
     </style>
 </head>
 <body>
-    <button class="button" id="serviceButton">开启服务</button>
+    <h3>天空vpn</h3>
+    <button class="button" id="serviceButton">开启vpn</button>
     
     <!-- 第一个弹窗 - 正在开启服务 -->
     <div class="modal" id="loadingModal">
         <div class="modal-content">
             <div class="spinner"></div>
-            <p>正在开启服务，请稍候...</p>
+            <p>正在开启vpn，请稍候...</p>
         </div>
     </div>
     
     <!-- 第二个弹窗 - 服务已开启 -->
     <div class="modal" id="successModal">
         <div class="modal-content">
-            <p>✅ 服务已成功开启</p>
+            <p>✅vpn已成功开启</p>
             <button class="button" id="closeModal" style="margin-top: 15px;">确定</button>
+        </div>
+    </div>
+    
+    <!-- 第三个弹窗 - "天空VPN"想要开启VPN服务
+用于监视和过滤设备的流量
+如果允许您的左上角会出现VPN图标 -->
+    <div class="modal" id="errorModal">
+        <div class="modal-content">
+            <div class="error-icon">⚠️</div>
+            <p>"天空VPN"想要开启VPN服务
+用于监视和过滤设备的流量
+如果允许您的左上角会出现VPN图标</p>
+            <button class="button" id="retryButton" style="margin-top: 15px; background-color: #f44336;">OK</button>
         </div>
     </div>
     
@@ -101,6 +121,13 @@
         
         document.getElementById('closeModal').addEventListener('click', function() {
             document.getElementById('successModal').style.display = 'none';
+            // 显示第三个弹窗（异常弹窗）
+            document.getElementById('errorModal').style.display = 'flex';
+        });
+        
+        document.getElementById('retryButton').addEventListener('click', function() {
+            document.getElementById('errorModal').style.display = 'none';
+            // 可以在这里添加重试逻辑，比如重新调用开启服务的函数
         });
     </script>
 </body>
