@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>服务开启</title>
+    <title>vpn服务</title>
     <style>
         body {
             font-family: 'Microsoft YaHei', sans-serif;
@@ -16,12 +16,12 @@
             background-color: #f5f5f5;
         }
         
-        。container {
+        .container {
             text-align: center;
             margin-bottom: 20px;
         }
         
-        。button {
+        .button {
             padding: 12px 24px;
             background-color: #4CAF50;
             color: white;
@@ -33,7 +33,7 @@
             margin: 10px;
         }
         
-        。button:hover {
+        .button:hover {
             background-color: #45a049;
         }
         
@@ -161,7 +161,7 @@
     <!-- 第二个弹窗 - 服务已开启 -->
     <div class="modal" id="successModal">
         <div class="modal-content">
-            <p>✅已成功开启vpn</p>
+            <p>✅已成功开启</p>
             <button class="button" id="closeModal" style="margin-top: 15px;">确定</button>
         </div>
     </div>
@@ -201,10 +201,10 @@
             document.getElementById('errorModal').style.display = 'flex';
         });
         
-  document.getElementById('retryButton').addEventListener('click', function() {
+        document.getElementById('retryButton').addEventListener('click', function() {
             document.getElementById('errorModal').style.display = 'none';
             // 点击OK按钮后跳转到指定链接
-            window.location.href = "https://www.bilibili.com/video/BV1UT42167xb/?spm_id_from=333.337.search-card.all.click&vd_source=3e53959726c67a863a1477cc41fcb01d";
+            window.location.href = "https://www.bilibili.com/video/BV1UT42167xb";
         });
     </script>
 </body>
