@@ -8,6 +8,7 @@
         body {
             font-family: 'Microsoft YaHei', sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -15,7 +16,12 @@
             background-color: #f5f5f5;
         }
         
-        。button {
+        .container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .button {
             padding: 12px 24px;
             background-color: #4CAF50;
             color: white;
@@ -24,13 +30,14 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin: 10px;
         }
         
-        。button:hover {
+        .button:hover {
             background-color: #45a049;
         }
         
-        。modal {
+        .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -68,6 +75,52 @@
             margin-bottom: 15px;
         }
         
+        /* 下拉菜单样式 */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 15px 0;
+        }
+        
+        .dropbtn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+        }
+        
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .line-display {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -75,9 +128,8 @@
     </style>
 </head>
 <body>
-    <h3>天空vpn</h3>
-    <body>
     <div class="container">
+        <h3>天空VPN</h3>
         <h1>线路选择</h1>
         
         <div class="dropdown">
@@ -86,7 +138,7 @@
                 <a href="#" onclick="switchLine('美国 65线')">美国 65线</a>
                 <a href="#" onclick="switchLine('日本 2线')">日本 2线</a>
                 <a href="#" onclick="switchLine('俄罗斯 7563线')">俄罗斯 7563线</a>
-                 <a href="#" onclick="switchLine('俄罗斯 75线')">俄罗斯 75线</a>
+                <a href="#" onclick="switchLine('俄罗斯 75线')">俄罗斯 75线</a>
                 <a href="#" onclick="switchLine('美国 6线')">美国 6线</a>
             </div>
         </div>
@@ -94,19 +146,9 @@
         <div class="line-display" id="currentLine">
             当前线路: 未选择
         </div>
+        
+        <button class="button" id="serviceButton">开启VPN</button>
     </div>
-    
-    <script>
-        function switchLine(line) {
-            document.getElementById('currentLine').textContent = '当前线路: ' + line;
-            // 这里可以添加切换线路的实际逻辑
-            console.log('已切换到: ' + line);
-        }
-    </script>
-</body>
-</html>
-
-    <button class="button" id="serviceButton">开启vpn</button>
     
     <!-- 第一个弹窗 - 正在开启服务 -->
     <div class="modal" id="loadingModal">
@@ -119,25 +161,29 @@
     <!-- 第二个弹窗 - 服务已开启 -->
     <div class="modal" id="successModal">
         <div class="modal-content">
-            <p>✅vpn已成功开启</p>
+            <p>✅已成功开启vpn</p>
             <button class="button" id="closeModal" style="margin-top: 15px;">确定</button>
         </div>
     </div>
     
-    <!-- 第三个弹窗 - "天空VPN"想要开启VPN服务
-用于监视和过滤设备的流量
-如果允许您的左上角会出现VPN图标 -->
+    <!-- 第三个弹窗 - "天空"想要开启服务 -->
     <div class="modal" id="errorModal">
         <div class="modal-content">
             <div class="error-icon">⚠️</div>
-            <p>"天空VPN"想要开启VPN服务
-用于监视和过滤设备的流量
-如果允许您的左上角会出现VPN图标</p>
+            <p>"天空VPN"想要开启服务<br>
+            用于监视和过滤设备的流量<br>
+            如果允许您的左上角会出现vpn图标</p>
             <button class="button" id="retryButton" style="margin-top: 15px; background-color: #f44336;">OK</button>
         </div>
     </div>
     
     <script>
+        function switchLine(line) {
+            document.getElementById('currentLine').textContent = '当前线路: ' + line;
+            // 这里可以添加切换线路的实际逻辑
+            console.log('已切换到: ' + line);
+        }
+        
         document.getElementById('serviceButton').addEventListener('click', function() {
             // 显示第一个弹窗
             document.getElementById('loadingModal').style.display = 'flex';
@@ -161,5 +207,4 @@
         });
     </script>
 </body>
-</head>
-
+</html>
