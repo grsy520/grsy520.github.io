@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>充值中心</title>
+    <style>
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #333;
+            font-size: 22px;
+            margin: 0;
+        }
+        .product-info {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .product-item:last-child {
+            margin-bottom: 0;
+        }
+        .product-label {
+            color: #666;
+        }
+        .product-value {
+            font-weight: bold;
+        }
+        .payment-methods {
+            margin-bottom: 25px;
+        }
+        .payment-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .payment-option.selected {
+            border-color: #07C160;
+            background-color: #f0f9eb;
+        }
+        .payment-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+        .payment-name {
+            flex-grow: 1;
+            font-size: 15px;
+        }
+        .payment-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .payment-checkbox.selected {
+            border-color: #07C160;
+            background-color: #07C160;
+        }
+        .payment-checkbox.selected:after {
+            content: "";
+            display: block;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        .btn-pay {
+            width: 100%;
+            padding: 12px;
+            background-color: #07C160;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-pay:hover {
+            background-color: #06AD56;
+        }
+        .btn-pay:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>充值中心</h1>
+        </div>
+        
+        <div class="product-info">
+            <div class="product-item">
+                <span class="product-label">商品名称：</span>
+                <span class="product-value">***GB充值</span>
+            </div>
+            <div class="product-item">
+                <span class="product-label">充值金额：</span>
+                <span class="product-value">¥0</span>
+            </div>
+            <div class="product-item">
+                <span class="product-label">有效期：</span>
+                <span class="product-value">-1天</span>
+            </div>
+        </div>
+        
+        <div class="payment-methods">
+            <div class="payment-title">选择支付方式</div>
+            
+            <div class="payment-option" id="wechat-pay">
+                <span class="payment-name">微信支付</span>
+                <div class="payment-checkbox" id="wechat-checkbox"></div>
+            </div>
+        </div>
+        
+        <button class="btn-pay" id="confirm-pay" disabled>确认支付</button>
+    </div>
+
+    <script>
+        // 选择支付方式
+        const wechatPayOption = document.getElementById('wechat-pay');
+        const wechatCheckbox = document.getElementById('wechat-checkbox');
+        const confirmPayBtn = document.getElementById('confirm-pay');
+        
+        let selectedPayment = null;
+        
+        wechatPayOption.addEventListener('click', function() {
+            selectedPayment = 'wechat';
+            wechatCheckbox.classList.add('selected');
+            wechatPayOption.classList.add('selected');
+            confirmPayBtn.disabled = false;
+        });
+        
+        // 确认支付按钮点击事件 - 跳转到指定网页
+        confirmPayBtn.addEventListener('click', function() {
+            if (selectedPayment === 'wechat') {
+                // 跳转到指定的网页URL
+                window.location.href = 'https://www.bilibili.com/video/BV1GJ411x7h7';
+            }
+        });
+    </script>
+</body>
+</html>
