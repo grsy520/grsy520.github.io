@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支付成功</title>
+    <style>
+        :root {
+            --primary-color: #07C160;
+            --text-dark: #333333;
+            --text-medium: #666666;
+            --text-light: #999999;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f8f8;
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .success-container {
+            max-width: 500px;
+            width: 100%;
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .success-message {
+            font-size: 16px;
+            color: var(--text-medium);
+            margin-bottom: 30px;
+        }
+
+        .countdown {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-top: 20px;
+        }
+
+        .btn-return {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-return:hover {
+            background-color: #06AD56;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 480px) {
+            .success-container {
+                padding: 30px 20px;
+            }
+            
+            .success-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <svg class="success-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="#07C160"/>
+        </svg>
+        <h2 class="success-title">支付成功</h2>
+        <p class="success-message">感谢您的购买！MIFI已处理完成</p>
+        <p class="countdown" id="countdown">3秒后自动返回首页</p>
+        <a href="https://example.com/home" class="btn-return">立即返回</a>
+    </div>
+
+    <script>
+        // 倒计时跳转
+        let seconds = 10;
+        const countdownElement = document.getElementById('countdown');
+        const targetUrl = 'https://example.com/home';
+        
+        function updateCountdown() {
+            countdownElement.textContent = `${seconds}秒后自动返回首页`;
+            
+            if (seconds <= 0) {
+                window.location.href = targetUrl;
+            } else {
+                seconds--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // 启动倒计时
+        updateCountdown();
+        
+        // 如果用户点击立即返回按钮，取消倒计时
+        document.querySelector('.btn-return').addEventListener('click', function() {
+            seconds = 0;
+            window.location.href = targetUrl;
+        });
+    </script>
+</body>
+</html>
