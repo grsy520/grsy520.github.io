@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>充值中心</title>
+    <style>
+        :root {
+            --primary-color: #07C160;
+            --primary-hover: #06AD56;
+            --gold-color: #FFD700;
+            --silver-color: #C0C0C0;
+            --text-dark: #333333;
+            --text-medium: #666666;
+            --text-light: #999999;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f8f8;
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        。page-container {
+            max-width: 100%;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .content-area {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        .product-info {
+            padding: 20px;
+            background-color: white;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .product-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .product-label {
+            color: var(--text-medium);
+            font-size: 15px;
+        }
+
+        .product-value {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 16px;
+        }
+
+        #amount-display {
+            color: #FF5722;
+            font-size: 18px;
+        }
+
+        .payment-methods {
+            padding: 20px;
+            background-color: white;
+            margin-bottom: 1px;
+        }
+
+        .payment-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            background-color: white;
+            transition: var(--transition);
+        }
+
+        .payment-option:hover {
+            background-color: #f9f9f9;
+        }
+
+        .payment-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(7, 193, 96, 0.05);
+        }
+
+        .package-option.selected {
+            border-color: var(--gold-color);
+            background-color: rgba(255, 215, 0, 0.05);
+        }
+
+        .payment-icon {
+            width: 36px;
+            height: 36px;
+            margin-right: 12px;
+            object-fit: contain;
+        }
+
+        .payment-name {
+            flex-grow: 1;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .payment-price {
+            margin-right: 12px;
+            color: #FF5722;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .payment-checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .payment-checkbox.selected {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+        }
+
+        .package-checkbox.selected {
+            border-color: var(--gold-color);
+            background-color: var(--gold-color);
+        }
+
+        .payment-checkbox.selected:after {
+            content: "";
+            display: block;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .btn-pay:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-pay:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        @media (min-width: 768px) {
+            .page-container {
+                padding: 40px;
+            }
+            
+            .content-area {
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            .btn-pay {
+                position: static;
+                border-radius: 8px;
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="header">
+            <h1>充值中心</h1>
+        </div>
+        
+        <div class="content-area">
+            <div class="product-info">
+                <div class="product-item">
+                    <span class="product-label">商品名称：</span>
+                    <span class="product-value">余额</span>
+                </div>
+                <div class="product-item">
+                    <span class="product-label">充值金额：</span>
+                    <span class="product-value" id="amount-display">¥9999</span>
+                </div>
+                <div class="product-item">
+                    <span class="product-label">有效期：</span>
+                    <span class="product-value">-1天</span>
+                </div>
+            </div>
+            
+            <div class="payment-methods">
+                <div class="payment-title">选择支付方式</div>
+                
+                <div class="payment-option" id="wechat-pay">
+                    <img src="https://grsy520.github.io/MIFI/wx.png" alt="微信支付" class="payment-icon">
+                    <span class="payment-name">微信支付</span>
+                    <div class="payment-checkbox" id="wechat-checkbox"></div>
+                </div>
+            </div>
+            
+            <div class="payment-methods">
+                <div class="payment-title">测试勿选择</div>
+                
+                <div class="payment-option package-option" id="gold-package">
+                    <span class="payment-price">+¥1</span>
+                    <span class="payment-name">cs</span>
+                    <div class="payment-checkbox package-checkbox" id="gold-checkbox"></div>
+                </div>
+                
+                <div class="payment-option package-option" id="silver-package">
+                    <span class="payment-price">+¥5</span>
+                    <span class="payment-name">cs</span>
+                    <div class="payment-checkbox package-checkbox" id="silver-checkbox"></div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="btn-pay" id="confirm-pay" disabled>立即支付</button>
+    </div>
+
+    <script>
+        // 基础金额
+        const baseAmount = 9.9;
+        let currentAmount = baseAmount;
+        let selectedPayment = null;
+        let selectedPackage = null;
+        
+        // 获取DOM元素
+        const wechatPayOption = document.getElementById('wechat-pay');
+        const wechatCheckbox = document.getElementById('wechat-checkbox');
+        const goldPackageOption = document.getElementById('gold-package');
+        const goldCheckbox = document.getElementById('gold-checkbox');
+        const silverPackageOption = document.getElementById('silver-package');
+        const silverCheckbox = document.getElementById('silver-checkbox');
+        const confirmPayBtn = document.getElementById('confirm-pay');
+        const amountDisplay = document.getElementById('amount-display');
+        
+        // 更新金额显示
+        function updateAmountDisplay() {
+            amountDisplay.textContent = `¥${currentAmount.toFixed(2)}`;
+        }
+        
+        // 微信支付选项点击事件
+        wechatPayOption.addEventListener('click', function() {
+            if (wechatCheckbox.classList.contains('selected')) {
+                wechatCheckbox.classList.remove('selected');
+                wechatPayOption.classList.remove('selected');
+                selectedPayment = null;
+            } else {
+                wechatCheckbox.classList.add('selected');
+                wechatPayOption.classList.add('selected');
+                selectedPayment = 'wechat';
+            }
+            
+            checkPayButtonStatus();
+        });
+        
+        // 黄金套餐点击事件
+        goldPackageOption.addEventListener('click', function() {
+            if (goldCheckbox.classList.contains('selected')) {
+                goldCheckbox.classList.remove('selected');
+                goldPackageOption.classList.remove('selected');
+                selectedPackage = null;
+                currentAmount = baseAmount;
+            } else {
+                // 取消其他套餐选择
+                silverCheckbox.classList.remove('selected');
+                silverPackageOption.classList.remove('selected');
+                
+                goldCheckbox.classList.add('selected');
+                goldPackageOption.classList.add('selected');
+                selectedPackage = 'gold';
+                currentAmount = baseAmount + 100;
+            }
+            updateAmountDisplay();
+            checkPayButtonStatus();
+        });
+        
+        // 白银套餐点击事件
+        silverPackageOption.addEventListener('click', function() {
+            if (silverCheckbox.classList.contains('selected')) {
+                silverCheckbox.classList.remove('selected');
+                silverPackageOption.classList.remove('selected');
+                selectedPackage = null;
+                currentAmount = baseAmount;
+            } else {
+                // 取消其他套餐选择
+                goldCheckbox.classList.remove('selected');
+                goldPackageOption.classList.remove('selected');
+                
+                silverCheckbox.classList.add('selected');
+                silverPackageOption.classList.add('selected');
+                selectedPackage = 'silver';
+                currentAmount = baseAmount + 50;
+            }
+            updateAmountDisplay();
+            checkPayButtonStatus();
+        });
+        
+        // 检查支付按钮状态
+        function checkPayButtonStatus() {
+            if (!selectedPayment && !selectedPackage) {
+                confirmPayBtn.disabled = true;
+            } else {
+                confirmPayBtn.disabled = false;
+            }
+        }
+        
+        // 确认支付按钮点击事件
+        confirmPayBtn.addEventListener('click', function() {
+            if (selectedPayment === 'wechat') {
+                // 跳转到微信支付页面
+                let url = 'https://grsy520.github.io/MIFI/zfcg.html';
+                if (selectedPackage) {
+                    url += `?package=${selectedPackage}&amount=${currentAmount}`;
+                }
+                window.location.href = url;
+            } else if (selectedPackage) {
+                // 处理套餐购买逻辑
+                alert(`即将购买${selectedPackage === 'gold' ? '黄金' : '白银'}加速套餐，金额：¥${currentAmount.toFixed(2)}`);
+                // 实际应用中这里应该跳转到支付页面
+                // window.location.href = '支付URL';
+            }
+        });
+    </script>
+</body>
+</html>
