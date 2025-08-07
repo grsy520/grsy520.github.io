@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设备充值中心</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 30px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo img {
+            width: 80px;
+            height: 80px;
+        }
+        h1 {
+            color: #1976D2;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        .input-field:focus {
+            border-color: #1976D2;
+            outline: none;
+        }
+        .btn {
+            background-color: #1976D2;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #1565C0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://grsy520.github.io/MIFI/wi-fi-6-certified.jpg" alt="Logo">
+        </div>
+        
+        <h1>设备充值</h1>
+        
+        <form id="rechargeForm">
+            <div class="form-group">
+                <label for="deviceId">设备充值号</label>
+                <input type="text" id="deviceId" class="input-field" placeholder="请输入设备充值号" required>
+            </div>
+            
+            <!-- 修改为带跳转的按钮 -->
+            <a href="https://grsy520.github.io/MIFI/vip.html" class="btn" id="confirmBtn">确认</a>
+        </form>
+        
+        <div class="footer">
+            <p>如有问题，请联系客服：400-88888888</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('rechargeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // 阻止表单默认提交行为
+        });
+
+        document.getElementById('confirmBtn').addEventListener('click', function(e) {
+            var deviceId = document.getElementById('deviceId').value;
+            
+            if(deviceId.trim() === '') {
+                alert('请输入设备充值号');
+                e.preventDefault(); // 阻止跳转
+                return;
+            }
+            
+    </script>
+</body>
+</html>
