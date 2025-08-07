@@ -112,6 +112,7 @@
         <div class="tabs">
             <div class="tab active" onclick="openTab('flow')">流量充值</div>
             <div class="tab" onclick="openTab('package')">套餐办理</div>
+              <div class="tab" onclick="openTab('balance')">余额充值</div>
             <div class="tab" onclick="openTab('home')">返回主页</div>
         </div>
         
@@ -128,8 +129,8 @@
                     <div class="product-desc">有效期30天</div>
                 </div>
             </div>
+<a href="https://grsy520.github.io/MIFI/vip2.html" class="btn btn-link">立即办理</a>
             
-            <button class="btn">立即充值</button>
         </div>
         
         <div id="package" class="tab-content">
@@ -154,6 +155,34 @@
             </div>
            <!-- 修改为更可靠的跳转方式 -->
             <a href="https://grsy520.github.io/MIFI/vip2.html" class="btn btn-link">立即办理</a>
+        </div>
+            <h2>余额充值</h2>
+            
+            <div class="form-group">
+                <label for="amount">充值金额</label>
+                <input type="number" id="amount" class="amount-input" placeholder="请输入充值金额" min="10" step="10">
+            </div>
+            
+            <div class="product-list">
+                <div class="product" onclick="selectAmount(50)">
+                    <div class="product-name">50元</div>
+                    <div class="product-price">¥50</div>
+                </div>
+                <div class="product" onclick="selectAmount(100)">
+                    <div class="product-name">100元</div>
+                    <div class="product-price">¥100</div>
+                </div>
+                <div class="product" onclick="selectAmount(200)">
+                    <div class="product-name">200元</div>
+                    <div class="product-price">¥200</div>
+                </div>
+                <div class="product" onclick="selectAmount(500)">
+                    <div class="product-name">500元</div>
+                    <div class="product-price">¥500</div>
+                </div>
+            </div>
+            
+            <a href="1111111111111111111" class="btn btn-link" id="rechargeBtn">立即充值</a>
         </div>
         <div id="home" class="tab-content">
             <h2>欢迎来到充值中心</h2>
