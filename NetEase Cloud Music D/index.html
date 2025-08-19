@@ -382,10 +382,12 @@
                     return;
                 }
                 
+                // 显示加载状态
                 loadingDiv.style.display = 'block';
                 resultDiv.style.display = 'none';
                 errorDiv.style.display = 'none';
                 
+                // 构建API URL
                 let apiUrl = 'https://api.kxzjoker.cn/api/163_music?';
                 
                 if (songId) {
