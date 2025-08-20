@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网易云音乐解析工具</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #d43c33;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .description {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .tab-container {
+            margin-bottom: 20px;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f8f8f8;
+            border: none;
+            border-right: 1px solid #ddd;
+            color: #555;
+            font-weight: normal;
+            transition: all 0.3s;
+        }
+        
+        .tab-button.active {
+            background-color: #fff;
+            border-bottom: 2px solid #d43c33;
+            font-weight: bold;
+            color: #d43c33;
+        }
+        
+        .tab-button:hover {
+            background-color: #eee;
+            color: #333;
+        }
+        
+        .tab-content {
+            padding: 20px;
+            background-color: #fff;
+            display: none;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-input {
+            flex: 1;
+        }
+        
+        .search-button {
+            width: auto;
+            padding: 12px 25px;
+        }
+        
+        .search-results {
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .song-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .song-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .song-item-cover {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+        
+        .song-item-content {
+            flex: 1;
+        }
+        
+        .song-item-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .song-item-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .song-item-info span {
+            background-color: #f0f0f0;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #555;
+        }
+        
+        .song-item-duration {
+            color: #888;
+            font-size: 13px;
+        }
+        
+        button {
+            background-color: #d43c33;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #c0362e;
+        }
+        
+        .loading {
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #d43c33;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            color: #d43c33;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .result {
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .song-info {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        
+        .song-cover {
+            width: 150px;
+            height: 150px;
+            border-radius: 5px;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+        
+        .song-details {
+            flex: 1;
+        }
+        
+        .song-title {
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .song-artist, .song-album, .song-quality, .song-size {
+            margin-bottom: 5px;
+            color: #666;
+        }
+        
+        .player-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .progress-container {
+            flex: 1;
+            margin: 0 15px;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background-color: #e0e0e0;
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: #d43c33;
+            border-radius: 2px;
+            width: 0%;
+        }
+        
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .control-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #555;
+            padding: 5px;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .control-button:hover {
+            background-color: #eee;
+            color: #333;
+        }
+        
+        .play-pause-btn {
+            background-color: #d43c33;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .play-pause-btn:hover {
+            background-color: #c0362e;
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+        }
+        
+        .volume-slider {
+            width: 80px;
+            margin-left: 8px;
+        }
+        
+        .lyrics-display {
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 2;
+            font-size: 14px;
+            color: #333;
+            border: 1px solid #eee;
+        }
+        
+        .lyrics-line {
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        
+        .lyrics-line.active {
+            color: #d43c33;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .audio-player {
+            display: none;
+        }
+        
+        .download-button {
+            background-color: #d43c33;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+        }
+        
+        .download-button:hover {
+            background-color: #c0362e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>网易云音乐解析工具</h1>
+        <p class="description">解析网易云音乐的音频</p>
+        
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-button active" data-tab="search">搜索歌曲</button>
+                <button class="tab-button" data-tab="parse">解析歌曲</button>
+            </div>
+            
+            <div id="search-tab" class="tab-content active">
+                <div class="search-form">
+                    <input type="text" id="search-input" class="search-input" placeholder="输入歌曲名称，例如: 晚风">
+                    <button id="search-btn" class="search-button">搜索</button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="search-limit">搜索结果数量</label>
+                    <select id="search-limit">
+                        <option value="10">10条</option>
+                        <option value="20">20条</option>
+                        <option value="30">30条</option>
+                        <option value="50">50条</option>
+                        <option value="100">100条</option>
+                    </select>
+                </div>
+                
+                <div id="search-results" class="search-results" style="display: none;"></div>
+            </div>
+            
+            <div id="parse-tab" class="tab-content">
+                <div class="form-group">
+                    <label for="song-id">歌曲ID</label>
+                    <input type="text" id="song-id" placeholder="例如: 475479888">
+                </div>
+                
+                <div class="form-group">
+                    <label for="song-url">分享链接 (必填，如果未填写歌曲ID)</label>
+                    <input type="text" id="song-url" placeholder="例如: https://music.163.com/#/song?id=2042083845">
+                </div>
+                
+                <div class="form-group">
+                    <label for="quality-select">音质选择</label>
+                    <select id="quality-select">
+                        <option value="standard" selected>标准音质</option>
+                        <option value="exhigh">极高品质</option>
+                        <option value="lossless">无损音质</option>
+                        <option value="hires">Hi-Res音质</option>
+                        <option value="jyeffect">高清环绕声</option>
+                        <option value="sky">5.1沉浸环绕声</option>
+                        <option value="jymaster">超清母带</option>
+                    </select>
+                </div>
+                
+                <button id="parse-btn">解析音乐</button>
+            </div>
+        </div>
+        
+        <div class="loading">
+            <div class="loading-spinner"></div>
+            <p>正在获取音乐信息...</p>
+        </div>
+        
+        <div class="error" id="error-message"></div>
+        
+        <div class="result" id="result">
+            <div class="song-info">
+                <img id="song-cover" class="song-cover" src="" alt="封面">
+                <div class="song-details">
+                    <h2 id="song-title" class="song-title"></h2>
+                    <p id="song-artist" class="song-artist"></p>
+                    <p id="song-album" class="song-album"></p>
+                    <p id="song-quality" class="song-quality"></p>
+                    <p id="song-size" class="song-size"></p>
+                </div>
+            </div>
+            
+            <div class="player-container">
+                <audio id="audio-player" class="audio-player"></audio>
+                
+                <div class="player-controls">
+                    <button class="control-button prev-btn" title="上一首">⏮</button>
+                    
+                    <button class="control-button play-pause-btn" title="播放/暂停">
+                        <span class="play-icon">▶</span>
+                        <span class="pause-icon" style="display:none;">⏸</span>
+                    </button>
+                    
+                    <button class="control-button next-btn" title="下一首">⏭</button>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar">
+                            <div class="progress" id="progress"></div>
+                        </div>
+                        <div class="time-display">
+                            <span id="current-time">00:00</span>
+                            <span id="duration">00:00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="volume-control">
+                        <button class="control-button volume-btn" title="静音">🔊</button>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                </div>
+                
+                <div class="lyrics-display" id="lyrics-display"></div>
+                
+                <button id="download-btn" class="download-button">下载歌曲</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const SEARCH_API = 'https://api.kxzjoker.cn/api/163_search';
+            const PARSE_API = 'https://api.kxzjoker.cn/api/163_music';
+            const COVER_API = 'https://api.moeyao.cn/meting/?type=cover&id=';
+            
+            // 标签页切换
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+                    
+                    // 移除所有active类
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // 添加active类到当前标签
+                    button.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // 搜索歌曲
+            document.getElementById('search-btn').addEventListener('click', async function() {
+                const query = document.getElementById('search-input').value.trim();
+                const limit = document.getElementById('search-limit').value;
+                
+                if (!query) {
+                    showError('请输入要搜索的歌曲名称');
+                    return;
+                }
+                
+                document.querySelector('.loading').style.display = 'block';
+                document.getElementById('search-results').style.display = 'none';
+                document.getElementById('result').style.display = 'none';
+                document.getElementById('error-message').style.display = 'none';
+                
+                try {
+                    const apiUrl = `${SEARCH_API}?name=${encodeURIComponent(query)}&limit=${limit}`;
+                    const response = await fetch(apiUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP错误! 状态码: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.code !== 200 || !data.data || data.data.length === 0) {
+                        throw new Error('未找到相关歌曲');
+                    }
+                    
+                    displaySearchResults(data);
+                } catch (error) {
+                    console.error('搜索错误:', error);
+                    showError(`搜索失败: ${error.message || '服务器错误'}`);
+                } finally {
+                    document.querySelector('.loading').style.display = 'none';
+                }
+            });
+            
+            // 解析歌曲
+            document.getElementById('parse-btn').addEventListener('click', async function() {
+                const songId = document.getElementById('song-id').value.trim();
+                const songUrl = document.getElementById('song-url').value.trim();
+                const quality = document.getElementById('quality-select').value;
+                
+                if (!songId && !songUrl) {
+                    showError('请输入歌曲ID或分享链接');
+                    return;
+                }
+                
+                // 停止当前播放并重置播放器状态
+                const audioPlayer = document.getElementById('audio-player');
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
+                document.querySelector('.play-icon').style.display = 'inline';
+                document.querySelector('.pause-icon').style.display = 'none';
+                document.getElementById('progress').style.width = '0%';
+                document.getElementById('current-time').textContent = '00:00';
+                
+                document.querySelector('.loading').style.display = 'block';
+                document.getElementById('result').style.display = 'none';
+                document.getElementById('error-message').style.display = 'none';
+                
+                try {
+                    let apiUrl = `${PARSE_API}?`;
+                    
+                    if (songId) {
+                        apiUrl += `ids=${songId}&`;
+                    } else {
+                        apiUrl += `url=${encodeURIComponent(songUrl)}&`;
+                    }
+                    
+                    apiUrl += `level=${quality}&type=json`;
+                    
+                    const response = await fetch(apiUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP错误! 状态码: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.status !== 200 && data.code !== 200) {
+                        throw new Error(data.message || '解析失败');
+                    }
+                    
+                    displayResult(data, true);
+                } catch (error) {
+                    console.error('解析错误:', error);
+                    showError(`解析失败: ${error.message || '服务器错误'}`);
+                } finally {
+                    document.querySelector('.loading').style.display = 'none';
+                }
+            });
+            
+            // 显示搜索结果
+            function displaySearchResults(data) {
+                const resultsContainer = document.getElementById('search-results');
+                resultsContainer.innerHTML = '';
+                
+                data.data.forEach(song => {
+                    const songItem = document.createElement('div');
+                    songItem.className = 'song-item';
+                    songItem.setAttribute('data-id', song.id);
+                    
+                    const artists = song.artists.map(artist => artist.name).join(' / ');
+                    const album = song.album.name;
+                    const publishTime = song.album.publishTime;
+                    const coverUrl = `${COVER_API}${song.id}`;
+                    
+                    songItem.innerHTML = `
+                        <img src="${coverUrl}" class="song-item-cover" alt="专辑封面" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%23f5f5f5\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' font-family=\'Arial\' font-size=\'12\' fill=\'%23666\' text-anchor=\'middle\' dominant-baseline=\'middle\'%3E无封面%3C/text%3E%3C/svg%3E'">
+                        <div class="song-item-content">
+                            <div class="song-item-title">${song.name}</div>
+                            <div class="song-item-duration">${song.duration}</div>
+                            <div class="song-item-info">
+                                <span>歌手: ${artists}</span>
+                                <span>专辑: ${album}</span>
+                                <span>发布时间: ${publishTime}</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    songItem.addEventListener('click', function() {
+                        const songId = this.getAttribute('data-id');
+                        document.getElementById('song-id').value = songId;
+                        document.getElementById('song-url').value = '';
+                        document.querySelector('.tab-button[data-tab="parse"]').click();
+                        document.getElementById('parse-btn').click();
+                    });
+                    
+                    resultsContainer.appendChild(songItem);
+                });
+                
+                document.getElementById('search-results').style.display = 'block';
+            }
+            
+            // 解析歌词
+            function parseLyrics(lyricText) {
+                const lines = lyricText.split('\n');
+                const lyrics = [];
+                
+                lines.forEach(line => {
+                    const match = line.match(/^\[(\d{2}):(\d{2})\.(\d{2,3})\](.*)/);
+                    if (match) {
+                        const minutes = parseInt(match[1]);
+                        const seconds = parseInt(match[2]);
+                        const milliseconds = parseInt(match[3].length === 2 ? match[3] + '0' : match[3]);
+                        const time = minutes * 60 + seconds + milliseconds / 1000;
+                        const text = match[4].trim();
+                        
+                        if (text) {
+                            lyrics.push({ time, text });
+                        }
+                    }
+                });
+                
+                return lyrics;
+            }
+            
+            // 显示歌词
+            function displayLyrics(lyrics) {
+                const lyricsDisplay = document.getElementById('lyrics-display');
+                lyricsDisplay.innerHTML = '';
+                
+                lyrics.forEach(line => {
+                    const div = document.createElement('div');
+                    div.className = 'lyrics-line';
+                    div.textContent = line.text;
+                    div.dataset.time = line.time;
+                    lyricsDisplay.appendChild(div);
+                });
+            }
+            
+            // 更新歌词高亮
+            function updateLyricsHighlight(currentTime) {
+                const lyricsLines = document.querySelectorAll('.lyrics-line');
+                let activeLine = null;
+                
+                lyricsLines.forEach(line => {
+                    line.classList.remove('active');
+                    const lineTime = parseFloat(line.dataset.time);
+                    
+                    if (lineTime <= currentTime) {
+                        activeLine = line;
+                    }
+                });
+                
+                if (activeLine) {
+                    activeLine.classList.add('active');
+                    // 自动滚动到当前歌词
+                    activeLine.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            }
+            
+            // 显示解析结果
+            function displayResult(data, autoPlay = false) {
+                if (!data.url) {
+                    showError('无法获取音频链接');
+                    return;
+                }
+                
+                // 更新歌曲信息
+                document.getElementById('song-title').textContent = data.name || '未知歌曲';
+                document.getElementById('song-artist').textContent = '歌手: ' + (data.ar_name || '未知歌手');
+                document.getElementById('song-album').textContent = '专辑: ' + (data.al_name || '未知专辑');
+                document.getElementById('song-quality').textContent = '音质: ' + (data.level || '未知');
+                document.getElementById('song-size').textContent = '大小: ' + (data.size || '未知');
+                document.getElementById('song-cover').src = data.pic || '';
+                
+                // 设置音频播放器
+                const audioPlayer = document.getElementById('audio-player');
+                audioPlayer.src = data.url;
+                
+                // 自动播放新解析的音乐
+                if (autoPlay) {
+                    audioPlayer.play().then(() => {
+                        document.querySelector('.play-icon').style.display = 'none';
+                        document.querySelector('.pause-icon').style.display = 'inline';
+                    }).catch(error => {
+                        console.error('自动播放失败:', error);
+                    });
+                }
+                
+                // 处理歌词
+                if (data.lyric) {
+                    const lyrics = parseLyrics(data.lyric);
+                    displayLyrics(lyrics);
+                    
+                    // 监听时间更新来高亮歌词
+                    audioPlayer.addEventListener('timeupdate', function() {
+                        updateLyricsHighlight(this.currentTime);
+                    });
+                } else {
+                    document.getElementById('lyrics-display').textContent = '暂无歌词';
+                }
+                
+                // 设置下载链接
+                const downloadBtn = document.getElementById('download-btn');
+                downloadBtn.addEventListener('click', function() {
+                    const url = audioPlayer.src;
+                    if (!url) {
+                        showError('没有可下载的音频');
+                        return;
+                    }
+                    
+                    // 创建隐藏的下载链接
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${data.name || 'song'} - ${data.ar_name || 'artist'}.mp3`;
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                });
+                
+                // 播放器控制
+                const playPauseBtn = document.querySelector('.play-pause-btn');
+                const playIcon = document.querySelector('.play-icon');
+                const pauseIcon = document.querySelector('.pause-icon');
+                const progressBar = document.getElementById('progress-bar');
+                const progress = document.getElementById('progress');
+                const currentTimeDisplay = document.getElementById('current-time');
+                const durationDisplay = document.getElementById('duration');
+                const volumeBtn = document.querySelector('.volume-btn');
+                const volumeSlider = document.querySelector('.volume-slider');
+                
+                // 播放/暂停控制
+                playPauseBtn.addEventListener('click', function() {
+                    if (audioPlayer.paused) {
+                        audioPlayer.play();
+                        playIcon.style.display = 'none';
+                        pauseIcon.style.display = 'inline';
+                    } else {
+                        audioPlayer.pause();
+                        playIcon.style.display = 'inline';
+                        pauseIcon.style.display = 'none';
+                    }
+                });
+                
+                // 更新进度条
+                audioPlayer.addEventListener('timeupdate', function() {
+                    const currentTime = audioPlayer.currentTime;
+                    const duration = audioPlayer.duration;
+                    
+                    if (duration) {
+                        const progressPercent = (currentTime / duration) * 100;
+                        progress.style.width = `${progressPercent}%`;
+                        
+                        // 更新时间显示
+                        currentTimeDisplay.textContent = formatTime(currentTime);
+                        durationDisplay.textContent = formatTime(duration);
+                    }
+                });
+                
+                // 点击进度条跳转
+                progressBar.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const pos = (e.clientX - rect.left) / rect.width;
+                    audioPlayer.currentTime = pos * audioPlayer.duration;
+                });
+                
+                // 音量控制
+                volumeSlider.addEventListener('input', function() {
+                    audioPlayer.volume = this.value;
+                    
+                    // 更新音量图标
+                    if (this.value == 0) {
+                        volumeBtn.textContent = '🔇';
+                    } else if (this.value < 0.5) {
+                        volumeBtn.textContent = '🔉';
+                    } else {
+                        volumeBtn.textContent = '🔊';
+                    }
+                });
+                
+                // 静音/取消静音
+                volumeBtn.addEventListener('click', function() {
+                    if (audioPlayer.volume > 0) {
+                        audioPlayer.volume = 0;
+                        volumeSlider.value = 0;
+                        this.textContent = '🔇';
+                    } else {
+                        audioPlayer.volume = 0.7;
+                        volumeSlider.value = 0.7;
+                        this.textContent = '🔊';
+                    }
+                });
+                
+                // 当元数据加载完成后更新总时长
+                audioPlayer.addEventListener('loadedmetadata', function() {
+                    durationDisplay.textContent = formatTime(audioPlayer.duration);
+                });
+                
+                // 显示结果区域
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('error-message').style.display = 'none';
+            }
+            
+            // 格式化时间显示
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+            
+            function showError(message) {
+                document.getElementById('error-message').textContent = message;
+                document.getElementById('error-message').style.display = 'block';
+                document.getElementById('result').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
