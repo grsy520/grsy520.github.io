@@ -9,7 +9,7 @@
 请及时私信,
 
 央视,#genre#
-CCTV1,http://www.lizhinas.top:1009/rtp/239.252.219.200:5140
+CCTV1,http://www.lizhinas.top:1009/rtp/239.252.219.200:5140#1
 CCTV2,http://www.lizhinas.top:1009/rtp/239.252.220.183:5140
 CCTV3,http://www.lizhinas.top:1009/rtp/239.252.219.252:5140
 CCTV4,http://www.lizhinas.top:1009/rtp/239.252.220.184:5140
