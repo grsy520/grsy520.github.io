@@ -82,11 +82,11 @@ CHC动作电影,http://www.lizhinas.top:1009/rtp/239.252.219.85:5140
 CHC高清电影,http://www.lizhinas.top:1009/rtp/239.252.219.83:5140
 CHC家庭电影,http://www.lizhinas.top:1009/rtp/239.252.219.84:5140
 
-江西频道_=,#genre#
+江西频道,#genre#
 江西卫视HD,http://www.lizhinas.top:1009/rtp/239.252.220.63:5140
 江西都市频道,http://www.lizhinas.top:1009/rtp/239.252.220.238:5140
 江西经济生活频道HD,http://www.lizhinas.top:1009/rtp/239.252.219.173:5140
-江西影视旅游频道,http://www.lizhinas.top:1009/rtp/239.252.220.242:5140
+（无）江西影视旅游频道,http://www.lizhinas.top:1009/rtp/239.252.220.242:5140
 江西公共农业频道HD,http://www.lizhinas.top:1009/rtp/239.252.220.102:5140
 江西少儿频道,http://www.lizhinas.top:1009/rtp/239.252.219.113:5140
 江西新闻,http://www.lizhinas.top:1009/rtp/239.252.220.100:5140
