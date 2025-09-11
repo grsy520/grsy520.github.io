@@ -9,7 +9,7 @@
 请及时私信,1
 
 央视,#genre#
-CCTV1,http://110.178.210.211:9003/hls/1/index.m3u8#http://110.178.211.44:9003/hls/1/index.m3u8
+CCTV1,http://110.178.210.211:9003/hls/1/index.m3u8#http://110.178.211.44:9003/hls/1/index.m3u8#http://ygbh.site/php/bfgd.php?id=488#http://ygbh.site/php/bfgd.php?id=201
 CCTV2,http://110.178.210.211:9003/hls/2/index.m3u8#http://110.178.211.44:9003/hls/2/index.m3u8
 CCTV3,http://110.178.210.211:9003/hls/3/index.m3u8#http://110.178.211.44:9003/hls/3/index.m3u8
 CCTV4,http://110.178.210.211:9003/hls/4/index.m3u8#http://110.178.211.44:9003/hls/4/index.m3u8
