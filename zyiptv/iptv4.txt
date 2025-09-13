@@ -54,6 +54,23 @@ CCTV14,http://182.207.183.183:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1
 CCTV15,http://182.207.183.183:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV17,http://222.185.163.142:888/rtp/239.49.1.7:6000
 
+超高清央视,#genre#
+CCTV1,http://60.187.247.252:85/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV2,http://60.187.247.252:85/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV3,http://60.187.247.252:85/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV4,http://60.187.247.252:85/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV5,http://60.187.247.252:85/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV6,http://60.187.247.252:85/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV7,http://60.187.247.252:85/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV8,http://60.187.247.252:85/tsfile/live/0008_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV9,http://60.187.247.252:85/tsfile/live/0009_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV10,http://60.187.247.252:85/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV11,http://60.187.247.252:85/tsfile/live/0011_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV12,http://60.187.247.252:85/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV13,http://60.187.247.252:85/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV14,http://60.187.247.252:85/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV15,http://60.187.247.252:85/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
+
 卫视,#genre#
 北京卫视,http://110.178.210.211:9003/hls/20/index.m3u8
 安徽卫视,http://110.178.210.211:9003/hls/21/index.m3u8
@@ -120,6 +137,23 @@ CCTV17,http://222.185.163.142:888/rtp/239.49.1.7:6000
 山西社会与法制,http://171.116.255.54:9003/hls/53/index.m3u8
 山西文体生活,http://171.116.255.54:9003/hls/54/index.m3u8
 山西黄河,http://171.116.255.54:9003/hls/55/index.m3u8
+
+河南,#genre#
+河南卫视,http://42.238.235.96:85/tsfile/live/0139_1.m3u8?key=txiptv&playlive=1&authid=0
+河南都市,http://42.238.235.96:85/tsfile/live/1001_1.m3u8?key=txiptv&playlive=1&authid=0
+河南民生,http://42.238.235.96:85/tsfile/live/1002_1.m3u8?key=txiptv&playlive=1&authid=0
+
+重庆,#genre#
+CQTV影视,http://125.82.182.163:9999/rtp/235.254.198.180:7980
+CQTV都市,http://125.82.182.163:9999/rtp/235.254.198.181:7980
+CQTV时尚,http://125.82.182.163:9999/rtp/235.254.198.182:7980
+CQTV娱乐,http://125.82.182.163:9999/rtp/235.254.198.187:7980
+CQTV公共农村,http://125.82.182.163:9999/rtp/235.254.198.186:7980
+CQTV少儿,http://125.82.182.163:9999/rtp/235.254.196.214:1128
+CQTV科教,http://125.82.182.163:9999/rtp/235.254.196.215:1132
+CQTV生活,http://125.82.182.163:9999/rtp/235.254.196.216:1136
+CQTV汽摩,http://125.82.182.163:9999/rtp/235.254.196.221:1156
+睛彩重庆,http://125.82.182.163:9999/rtp/235.254.196.218:1146
 
 央视付费频道,#genre#
 世界地理,http://www.lizhinas.top:1009/rtp/239.252.219.93:5140#http://223.8.182.161:8083/udp/239.1.1.99:8099#http://171.116.255.54:9003/hls/59/index.m3u8
