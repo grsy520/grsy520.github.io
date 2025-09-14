@@ -6,7 +6,7 @@
 (此项目永久维护)
 (作者测试直播地点:厦门)
 (NC一天不喝奶茶就会死出品)
-2025.9.13,#genre#
+2025.9.14,#genre#
 软件仅供学习使用,7
 请在二十四小时内,8
 删除本软件,8
@@ -16,7 +16,7 @@
 请及时私信,1
 
 央视,#genre#
-CCTV1,http://110.178.210.211:9003/hls/1/index.m3u8#http://110.178.211.44:9003/hls/1/index.m3u8#http://ygbh.site/php/bfgd.php?id=488#http://125.82.182.163:9999/rtp/235.254.198.51:1480#http://171.116.255.54:9003/hls/1/index.m3u8
+CCTV1,http://110.178.210.211:9003/hls/1/index.m3u8#http://110.178.211.44:9003/hls/1/index.m3u8#http://125.82.182.163:9999/rtp/235.254.198.51:1480#http://171.116.255.54:9003/hls/1/index.m3u8
 CCTV2,http://110.178.210.211:9003/hls/2/index.m3u8#http://110.178.211.44:9003/hls/2/index.m3u8#http://125.82.182.163:9999/rtp/235.254.198.52:1484#http://171.116.255.54:9003/hls/2/index.m3u8
 CCTV3,http://110.178.210.211:9003/hls/3/index.m3u8#http://110.178.211.44:9003/hls/3/index.m3u8#http://125.82.182.163:9999/rtp/235.254.198.53:1488#http://171.116.255.54:9003/hls/3/index.m3u8
 CCTV4,http://110.178.210.211:9003/hls/4/index.m3u8#http://110.178.211.44:9003/hls/4/index.m3u8#http://125.82.182.163:9999/rtp/235.254.198.183:7980#http://171.116.255.54:9003/hls/4/index.m3u8
@@ -57,25 +57,26 @@ CCTV15,http://182.207.183.183:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1
 CCTV17,http://222.185.163.142:888/rtp/239.49.1.7:6000
 
 超高清央视,#genre#
-CCTV1,http://60.187.247.252:85/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV2,http://60.187.247.252:85/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV3,http://60.187.247.252:85/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV4,http://60.187.247.252:85/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV5,http://60.187.247.252:85/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV6,http://60.187.247.252:85/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV7,http://60.187.247.252:85/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV8,http://60.187.247.252:85/tsfile/live/0008_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV9,http://60.187.247.252:85/tsfile/live/0009_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV10,http://60.187.247.252:85/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV11,http://60.187.247.252:85/tsfile/live/0011_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV12,http://60.187.247.252:85/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV13,http://60.187.247.252:85/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV14,http://60.187.247.252:85/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV15,http://60.187.247.252:85/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV1,http://122.141.152.229:9004/hls/1/index.m3u8
+CCTV2,http://122.141.152.229:9004/hls/2/index.m3u8
+CCTV3,http://122.141.152.229:9004/hls/3/index.m3u8
+CCTV4,http://122.141.152.229:9004/hls/4/index.m3u8
+CCTV5,http://122.141.152.229:9004/hls/6/index.m3u8
+CCTV5+,http://122.141.152.229:9004/hls/7/index.m3u8
+CCTV6,http://122.141.152.229:9004/hls/8/index.m3u8
+CCTV7,http://122.141.152.229:9004/hls/9/index.m3u8
+CCTV8,http://122.141.152.229:9004/hls/10/index.m3u8
+CCTV9,http://122.141.152.229:9004/hls/11/index.m3u8
+CCTV10,http://122.141.152.229:9004/hls/12/index.m3u8
+CCTV11,http://122.141.152.229:9004/hls/13/index.m3u8
+CCTV12,http://122.141.152.229:9004/hls/14/index.m3u8
+CCTV13,http://122.141.152.229:9004/hls/15/index.m3u8
+CCTV14,http://122.141.152.229:9004/hls/16/index.m3u8
+CCTV15,
 CCTV16_4K,http://171.83.99.130:8880/rtp/239.69.1.249:11136#http://175.11.168.87:4022/udp/239.76.253.230:9000#http://175.11.168.87:4022/udp/239.76.246.230:1234
 
 卫视,#genre#
-北京卫视,http://110.178.210.211:9003/hls/20/index.m3u8
+北京卫视,http://110.178.210.211:9003/hls/20/index.m3u8#http://122.141.152.229:9004/hls/30/index.m3u8
 安徽卫视,http://110.178.210.211:9003/hls/21/index.m3u8
 重庆卫视,http://110.178.210.211:9003/hls/22/index.m3u8
 东方卫视,http://110.178.210.211:9003/hls/23/index.m3u8
@@ -212,8 +213,23 @@ CQTV汽摩,http://125.82.182.163:9999/rtp/235.254.196.221:1156
 湖南电影,http://175.11.168.87:4022/udp/239.76.245.119:1234
 湖南娱乐,http://175.11.168.87:4022/udp/239.76.245.121:1234
 湖南国际,http://175.11.168.87:4022/udp/239.76.245.124:1234
-湖南公共,http://175.11.168.87:4022/udp/239.76.245.123:1234\
-1,http://175.11.168.87:4022/udp/239.76.245.35:1234
+湖南公共,http://175.11.168.87:4022/udp/239.76.245.123:1234
+
+吉林,#genre#
+吉视生活,http://122.141.152.229:9004/hls/70/index.m3u8
+吉视都市,http://122.141.152.229:9004/hls/71/index.m3u8
+吉视影视,http://122.141.152.229:9004/hls/72/index.m3u8
+吉视乡村,http://122.141.152.229:9004/hls/73/index.m3u8
+长影频道,http://122.141.152.229:9004/hls/74/index.m3u8
+通化1,http://122.141.152.229:9004/hls/75/index.m3u8
+通化2,http://122.141.152.229:9004/hls/76/index.m3u8
+通化3,http://122.141.152.229:9004/hls/77/index.m3u8
+辉南,http://122.141.152.229:9004/hls/78/index.m3u8
+吉林教育,http://122.141.152.229:9004/hls/79/index.m3u8
+吉视综艺,http://122.141.152.229:9004/hls/80/index.m3u8
+
+
+
 
 央视付费频道,#genre#
 世界地理,http://171.83.99.130:8880/rtp/239.69.1.91:10186#http://223.8.182.161:8083/udp/239.1.1.99:8099#http://171.116.255.54:9003/hls/59/index.m3u8
@@ -229,9 +245,9 @@ CQTV汽摩,http://125.82.182.163:9999/rtp/235.254.196.221:1156
 央视文化精品,http://223.8.182.161:8083/udp/239.1.1.91:8091
 
 CHC,#genre#
-CHC影迷电影,http://171.83.99.130:8880/rtp/239.69.1.241:11088#http://175.11.168.87:4022/udp/239.76.245.242:1234
-CHC动作电影,http://171.83.99.130:8880/rtp/239.69.1.242:11094#http://175.11.168.87:4022/udp/239.76.245.243:1234
-CHC家庭影院,http://171.83.99.130:8880/rtp/239.69.1.243:11100#http://175.11.168.87:4022/udp/239.76.245.241:1234
+CHC影迷电影,http://171.83.99.130:8880/rtp/239.69.1.241:11088#http://175.11.168.87:4022/udp/239.76.245.242:1234#http://122.141.152.229:9004/hls/92/index.m3u8
+CHC动作电影,http://171.83.99.130:8880/rtp/239.69.1.242:11094#http://175.11.168.87:4022/udp/239.76.245.243:1234#http://122.141.152.229:9004/hls/91/index.m3u8
+CHC家庭影院,http://171.83.99.130:8880/rtp/239.69.1.243:11100#http://175.11.168.87:4022/udp/239.76.245.241:1234#http://122.141.152.229:9004/hls/93/index.m3u8
 
 凤凰,#genre#
 凤凰资讯,http://175.11.168.87:4022/udp/239.76.246.8:1234
