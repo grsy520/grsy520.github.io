@@ -129,35 +129,6 @@
             box-shadow: 0 8px 25px rgba(110, 69, 226, 0.4);
         }
         
-        .mirror-links {
-            margin-top: 2rem;
-            text-align: left;
-        }
-        
-        .mirror-title {
-            font-size: 1rem;
-            color: var(--light-text);
-            margin-bottom: 0.5rem;
-        }
-        
-        .mirror-list {
-            list-style: none;
-        }
-        
-        .mirror-item {
-            margin-bottom: 0.5rem;
-        }
-        
-        .mirror-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        
-        .mirror-link:hover {
-            text-decoration: underline;
-        }
-        
         .features {
             display: flex;
             flex-wrap: wrap;
@@ -233,30 +204,15 @@
         <header>
             <div class="logo">西</div>
             <h1>西柿TV</h1>
-            <p class="subtitle">高品质视频播放体验</p>
+            <p class="subtitle">高品质播放体验</p>
         </header>
         
         <div class="download-card">
             <div class="version-selector" id="versionSelector">
-                <!-- 版本选择器将通过JavaScript动态生成 -->
+              
             </div>
             
             <button id="downloadBtn" class="download-btn">立即下载</button>
-            
-            <div class="mirror-links">
-                <p class="mirror-title">备用下载地址：</p>
-                <ul class="mirror-list">
-                    <li class="mirror-item">
-                        <a href="grsy520.github.io/zyiptv" class="mirror-link">备用地址1 </a>
-                    </li>
-                    <li class="mirror-item">
-                        <a href="grsy520.github.io/zyiptv" class="mirror-link">备用地址2 </a>
-                    </li>
-                    <li class="mirror-item">
-                        <a href="grsy520.github.io/zyiptv" class="mirror-link">备用地址3 </a>
-                    </li>
-                </ul>
-            </div>
         </div>
         
         <div class="features">
@@ -272,59 +228,44 @@
             </div>
             <div class="feature-card">
                 <div class="feature-icon">📱</div>
-                <h3 class="feature-title">多端</h3>
-                <p class="feature-desc">支持多设备使用</p>
+                <h3 class="feature-title">重温经典</h3>
+                <p class="feature-desc">重温经典频道首次上线</p>
             </div>
         </div>
     </div>
     
     <footer>
-        <p>© 2023 西柿TV 版权所有 | 官方下载</p>
+        <p>© 2025 西柿TV 版权所有 </p>
     </footer>
 
     <script>
-        // 方便后续添加新版本
+        // 版本数据配置 - 方便后续添加新版本
         const versions = [
             {
                 id: 'v3.0',
-                name: '西柿TV 3.0',
-                date: '2025-8-15',
-                description: '修复已知问题，优化播放体验',
+                name: '西柿TV 3.0 ',
+                date: '2025-8-10',
+                description: '最新稳定版本，修复已知问题，优化播放体验',
                 downloadUrl: 'https://pan.baidu.re/down.php/8653670d99ce9594f15fc83210487312.apk',
-                mirrorUrls: [
-                    'https://wp.sqsq.net/down.php/8653670d99ce9594f15fc83210487312.apk',
-                    'https://wp.sqsq.net/down.php/8653670d99ce9594f15fc83210487312.apk',
-                    'https://wp.sqsq.net/down.php/8653670d99ce9594f15fc83210487312.apk'
-                ],
                 isRecommended: true
             },
             {
-                id: 'v3.1.5',
+                id: 'v2.0',
                 name: '西柿TV 2.0',
                 date: '2025-08-05',
                 description: '更换播放器盒子让体验更加精美。',
                 downloadUrl: 'https://pan.baidu.re/down.php/4c53e59006abb22a8937132dd7645bba.apk',
-                mirrorUrls: [
-                    'https://wp.sqsq.net/down.php/4c53e59006abb22a8937132dd7645bba.apk',
-                    'https://wp.sqsq.net/down.php/4c53e59006abb22a8937132dd7645bba.apk',
-                    'https://wp.sqsq.net/down.php/4c53e59006abb22a8937132dd7645bba.apk'
-                ],
                 isRecommended: false
             },
             {
-                id: 'v3.0.0',
+                id: 'v1.0',
                 name: '西柿TV 1.0',
                 date: '2025-07-20',
                 description: '初代软件使用DIYP壳子让播放更加流畅。',
                 downloadUrl: 'https://pan.baidu.re/down.php/392c04598f3014cbbec663c861177a22.apk',
-                mirrorUrls: [
-                    'https://wp.sqsq.net/down.php/392c04598f3014cbbec663c861177a22.apk',
-                    'https://wp.sqsq.net/down.php/392c04598f3014cbbec663c861177a22.apk',
-                    'https://wp.sqsq.net/down.php/392c04598f3014cbbec663c861177a22.apk'
-                ],
                 isRecommended: false
             },
-            
+           
         ];
 
         // 渲染版本选择器
@@ -363,9 +304,6 @@
                 // 更新下载按钮的URL
                 const downloadBtn = document.getElementById('downloadBtn');
                 downloadBtn.setAttribute('data-url', selectedVersion.downloadUrl);
-                
-                // 更新备用下载地址
-                updateMirrorLinks(selectedVersion.mirrorUrls);
             });
             
             // 清空容器并添加新元素
@@ -378,32 +316,10 @@
             const recommendedVersion = versions.find(v => v.isRecommended);
             downloadBtn.setAttribute('data-url', recommendedVersion.downloadUrl);
             
-            // 设置初始备用下载地址
-            updateMirrorLinks(recommendedVersion.mirrorUrls);
-            
             // 添加下载按钮点击事件
             downloadBtn.addEventListener('click', function() {
                 const url = this.getAttribute('data-url');
                 window.location.href = url;
-            });
-        }
-
-        // 更新备用下载地址
-        function updateMirrorLinks(mirrorUrls) {
-            const mirrorList = document.querySelector('.mirror-list');
-            mirrorList.innerHTML = '';
-            
-            mirrorUrls.forEach((url, index) => {
-                const li = document.createElement('li');
-                li.className = 'mirror-item';
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.className = 'mirror-link';
-                a.textContent = `备用地址${index + 1} (${new URL(url).hostname})`;
-                
-                li.appendChild(a);
-                mirrorList.appendChild(li);
             });
         }
 
