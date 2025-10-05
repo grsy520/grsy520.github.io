@@ -169,3 +169,4 @@ CCTV4K,http://www.lizhinas.top:1009/rtp/239.252.219.60:5140
 好学生,http://www.lizhinas.top:1009/rtp/239.252.220.90:5140
 解密,http://www.lizhinas.top:1009/rtp/239.252.220.209:5140
 爱上4K,http://pve.cdbackup.cn:8888/udp/239.93.0.97:5140
+sp,https://wp.sqsq.net/view.php/de0afed5d09389e316e69bfb9db7d848.mp4
