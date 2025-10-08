@@ -30,7 +30,7 @@
             padding: 2rem;
         }
         
-        。container {
+        .container {
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
@@ -204,12 +204,12 @@
         <header>
             <div class="logo">西</div>
             <h1>西柿TV</h1>
-            <p class="subtitle">高品质播放体验</p>
+            <p class="subtitle">高品质视频播放体验</p>
         </header>
         
         <div class="download-card">
             <div class="version-selector" id="versionSelector">
-              
+                <!-- 版本选择器将通过JavaScript动态生成 -->
             </div>
             
             <button id="downloadBtn" class="download-btn">立即下载</button>
@@ -228,26 +228,34 @@
             </div>
             <div class="feature-card">
                 <div class="feature-icon">📱</div>
-                <h3 class="feature-title">重温经典</h3>
-                <p class="feature-desc">重温经典频道首次上线</p>
+                <h3 class="feature-title">多端同步</h3>
+                <p class="feature-desc">支持多设备使用</p>
             </div>
         </div>
     </div>
     
     <footer>
-        <p>© 2025 西柿TV 版权所有 </p>
+        <p>© 2023 西柿TV 版权所有 | 官方下载</p>
     </footer>
 
     <script>
-        // 版本数据配置 - 方便后续添加新版本
+        // 版本数据配置
         const versions = [
+            {
+                id: 'v3.1',
+                name: '西柿TV 3.0 B1',
+                date: '2025-10-08',
+                description: '最新稳定版本，修复已知问题，优化播放体验',
+                downloadUrl: 'https://pan.baidu.re/down.php/68466f198c9f5884fd1275c5e5aa8c8b.apk',
+                isRecommended: true
+            },
             {
                 id: 'v3.0',
                 name: '西柿TV 3.0 ',
                 date: '2025',
                 description: '修复已知问题，优化播放体验',
                 downloadUrl: 'https://pan.baidu.re/down.php/8653670d99ce9594f15fc83210487312.apk',
-                isRecommended: true
+                isRecommended: false
             },
             {
                 id: 'v2.0',
@@ -265,62 +273,52 @@
                 downloadUrl: 'https://pan.baidu.re/down.php/392c04598f3014cbbec663c861177a22.apk',
                 isRecommended: false
             },
-           
         ];
 
         // 渲染版本选择器
         function renderVersionSelector() {
             const container = document.getElementById('versionSelector');
+            if (!container) return;
             
-            // 创建选择框
             const select = document.createElement('select');
             select.id = 'versionSelect';
             select.className = 'version-select';
             
-            // 添加版本选项
             versions.forEach(version => {
                 const option = document.createElement('option');
                 option.value = version.id;
-                option.textContent = `${version.name} (${version。date})`;
+                option.textContent = `${version.name} (${version.date})`;
                 if (version.isRecommended) {
                     option.textContent += ' ★推荐';
                 }
                 select.appendChild(option);
             });
             
-            // 创建版本描述区域
             const descriptionDiv = document.createElement('div');
             descriptionDiv.id = 'versionDescription';
             descriptionDiv.className = 'version-description';
-            
-            // 初始描述
             descriptionDiv.textContent = versions.find(v => v.isRecommended).description;
             
-            // 添加事件监听器
             select.addEventListener('change', function() {
                 const selectedVersion = versions.find(v => v.id === this.value);
-                descriptionDiv.textContent = selectedVersion.description;
-                
-                // 更新下载按钮的URL
-                const downloadBtn = document.getElementById('downloadBtn');
-                downloadBtn.setAttribute('data-url', selectedVersion.downloadUrl);
+                if (selectedVersion) {
+                    descriptionDiv.textContent = selectedVersion.description;
+                    document.getElementById('downloadBtn').setAttribute('data-url', selectedVersion.downloadUrl);
+                }
             });
             
-            // 清空容器并添加新元素
             container.innerHTML = '';
             container.appendChild(select);
             container.appendChild(descriptionDiv);
             
-            // 设置默认下载URL
             const downloadBtn = document.getElementById('downloadBtn');
-            const recommendedVersion = versions.find(v => v.isRecommended);
-            downloadBtn.setAttribute('data-url', recommendedVersion.downloadUrl);
-            
-            // 添加下载按钮点击事件
-            downloadBtn.addEventListener('click', function() {
-                const url = this.getAttribute('data-url');
-                window.location.href = url;
-            });
+            if (downloadBtn) {
+                const recommendedVersion = versions.find(v => v.isRecommended) || versions[0];
+                downloadBtn.setAttribute('data-url', recommendedVersion.downloadUrl);
+                downloadBtn.addEventListener('click', function() {
+                    window.location.href = this.getAttribute('data-url');
+                });
+            }
         }
 
         // 页面加载完成后初始化
