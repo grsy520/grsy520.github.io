@@ -12,14 +12,14 @@
             --light-text: #666;
             --bg-color: #f9f9ff;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
-        
+
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
             color: var(--text-color);
@@ -29,23 +29,23 @@
             align-items: center;
             padding: 2rem;
         }
-        
-        。container {
+
+        .container {
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
             padding: 0 1rem;
         }
-        
+
         header {
             text-align: center;
             margin-bottom: 3rem;
         }
-        
+
         .logo {
             width: 120px;
             height: 120px;
-            margin-bottom: 1.5rem;
+            margin: 0 auto 1.5rem;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border-radius: 24px;
             display: flex;
@@ -56,7 +56,7 @@
             font-weight: bold;
             box-shadow: 0 10px 30px rgba(110, 69, 226, 0.2);
         }
-        
+
         h1 {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
@@ -65,13 +65,13 @@
             background-clip: text;
             color: transparent;
         }
-        
+
         .subtitle {
             font-size: 1.2rem;
             color: var(--light-text);
             margin-bottom: 2rem;
         }
-        
+
         .download-card {
             background: white;
             border-radius: 16px;
@@ -81,12 +81,12 @@
             margin: 0 auto;
             text-align: center;
         }
-        
+
         .version-selector {
             margin-bottom: 2rem;
             text-align: left;
         }
-        
+
         .version-select {
             padding: 0.8rem 1.5rem;
             border-radius: 8px;
@@ -102,14 +102,14 @@
             background-position: right 1rem center;
             background-size: 1em;
         }
-        
+
         .version-description {
             color: var(--light-text);
             margin-bottom: 1.5rem;
             font-size: 0.95rem;
             text-align: left;
         }
-        
+
         .download-btn {
             background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             color: white;
@@ -123,12 +123,12 @@
             font-weight: 600;
             margin-top: 1rem;
         }
-        
+
         .download-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(110, 69, 226, 0.4);
         }
-        
+
         .features {
             display: flex;
             flex-wrap: wrap;
@@ -137,7 +137,7 @@
             margin-top: 3rem;
             max-width: 1000px;
         }
-        
+
         .feature-card {
             background: white;
             border-radius: 12px;
@@ -147,12 +147,12 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
-        
+
         .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
-        
+
         .feature-icon {
             width: 50px;
             height: 50px;
@@ -165,34 +165,34 @@
             color: var(--primary-color);
             font-size: 1.5rem;
         }
-        
+
         .feature-title {
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
-        
+
         .feature-desc {
             color: var(--light-text);
             font-size: 0.9rem;
         }
-        
+
         footer {
             margin-top: 4rem;
             text-align: center;
             color: var(--light-text);
             font-size: 0.9rem;
         }
-        
+
         @media (max-width: 768px) {
             .download-card {
                 padding: 2rem;
             }
-            
+
             h1 {
                 font-size: 2rem;
             }
-            
+
             .feature-card {
                 width: 100%;
             }
@@ -206,15 +206,14 @@
             <h1>西柿TV</h1>
             <p class="subtitle">高品质视频播放体验</p>
         </header>
-        
+
         <div class="download-card">
             <div class="version-selector" id="versionSelector">
-                <!-- 版本选择器将通过JavaScript动态生成 -->
+                <!-- 版本选择器由 JS 动态生成 -->
             </div>
-            
             <button id="downloadBtn" class="download-btn">立即下载</button>
         </div>
-        
+
         <div class="features">
             <div class="feature-card">
                 <div class="feature-icon">🎬</div>
@@ -233,7 +232,7 @@
             </div>
         </div>
     </div>
-    
+
     <footer>
         <p>© 2026 西柿TV 版权所有 | 官方下载</p>
     </footer>
@@ -241,34 +240,40 @@
     <script>
         // 版本数据配置
         const versions = [
-            {
-            {
-                id: 'v3.0',
-                name: '西柿TV 3.0 ',
+             {
+                id: 'v0.5',
+                name: '西柿TV 0.5',
                 date: '2025',
-                description: '修复已知问题，优化播放体验',
-                downloadUrl: 'https://i.uik.cc/down.php/8653670d99ce9594f15fc83210487312.apk',
-                isRecommended: false
+                description: '更换订阅地址，体验更加流畅。',
+                downloadUrl: 'https://i.uik.cc/down.php/21907a8d8a76b2462d7f6509cffdff69.apk',
+                isRecommended: true
             },
             {
-                id: 'v3.0',
-                name: '西柿TV 3.0 ',
+                id: 'v3.0.1',
+                name: '西柿TV 0.3 B2',
                 date: '2025',
-                description: '修复已知问题，优化播放体验',
+                description: '修复已知问题，优化播放稳定性',
+                downloadUrl: 'https://i.uik.cc/down.php/0f43facbdf8dbf8dc822bc8299a7e0a4.apk',
+                isRecommended: true
+            },
+            {
+                id: 'v0.3',
+                name: '西柿TV 0.3',
+                date: '2025',
+                description: '第0.3版本，播放器更换，体验更加流畅',
                 downloadUrl: 'https://i.uik.cc/down.php/8653670d99ce9594f15fc83210487312.apk',
                 isRecommended: false
             }
         ];
 
-        // 渲染版本选择器
         function renderVersionSelector() {
             const container = document.getElementById('versionSelector');
             if (!container) return;
-            
+
             const select = document.createElement('select');
             select.id = 'versionSelect';
             select.className = 'version-select';
-            
+
             versions.forEach(version => {
                 const option = document.createElement('option');
                 option.value = version.id;
@@ -278,35 +283,33 @@
                 }
                 select.appendChild(option);
             });
-            
+
             const descriptionDiv = document.createElement('div');
             descriptionDiv.id = 'versionDescription';
             descriptionDiv.className = 'version-description';
-            descriptionDiv.textContent = versions.find(v => v.isRecommended).description;
-            
-            select.addEventListener('change', function() {
+
+            // 安全取值：优先推荐，否则取第一个
+            const defaultVersion = versions.find(v => v.isRecommended) || versions[0];
+            descriptionDiv.textContent = defaultVersion.description;
+
+            select.addEventListener('change', function () {
                 const selectedVersion = versions.find(v => v.id === this.value);
                 if (selectedVersion) {
                     descriptionDiv.textContent = selectedVersion.description;
-                    document.getElementById('downloadBtn').setAttribute('data-url', selectedVersion.downloadUrl);
+                    downloadBtn.setAttribute('data-url', selectedVersion.downloadUrl);
                 }
             });
-            
-            container.innerHTML = '';
+
             container.appendChild(select);
             container.appendChild(descriptionDiv);
-            
+
             const downloadBtn = document.getElementById('downloadBtn');
-            if (downloadBtn) {
-                const recommendedVersion = versions.find(v => v.isRecommended) || versions[0];
-                downloadBtn.setAttribute('data-url', recommendedVersion.downloadUrl);
-                downloadBtn.addEventListener('click', function() {
-                    window.location.href = this.getAttribute('data-url');
-                });
-            }
+            downloadBtn.setAttribute('data-url', defaultVersion.downloadUrl);
+            downloadBtn.addEventListener('click', function () {
+                window.location.href = this.getAttribute('data-url');
+            });
         }
 
-        // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', renderVersionSelector);
     </script>
 </body>
