@@ -110,7 +110,7 @@
             text-align: left;
         }
 
-        .download-btn {
+        。download-btn {
             background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             color: white;
             border: none;
@@ -138,7 +138,7 @@
             max-width: 1000px;
         }
 
-        .feature-card {
+        。feature-card {
             background: white;
             border-radius: 12px;
             padding: 1.5rem;
@@ -166,7 +166,7 @@
             font-size: 1.5rem;
         }
 
-        .feature-title {
+        。feature-title {
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
             font-weight: 600;
@@ -254,7 +254,7 @@
                 date: '2026',
                 description: '修复已知问题，优化播放稳定性',
                 downloadUrl: 'https://i.uik.cc/down.php/0f43facbdf8dbf8dc822bc8299a7e0a4.apk',
-                isRecommended: true
+                isRecommended: false
             },
             {
                 id: 'v0.3',
@@ -281,7 +281,7 @@
                 if (version.isRecommended) {
                     option.textContent += ' ★推荐';
                 }
-                select.appendChild(option);
+                select。appendChild(option);
             });
 
             const descriptionDiv = document.createElement('div');
