@@ -30,7 +30,7 @@
             padding: 2rem;
         }
 
-        。container {
+        .container {
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
@@ -82,12 +82,12 @@
             text-align: center;
         }
 
-        。version-selector {
+        .version-selector {
             margin-bottom: 2rem;
             text-align: left;
         }
 
-        。version-select {
+        .version-select {
             padding: 0.8rem 1.5rem;
             border-radius: 8px;
             border: 1px solid #ddd;
@@ -110,7 +110,7 @@
             text-align: left;
         }
 
-        。download-btn {
+        .download-btn {
             background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             color: white;
             border: none;
@@ -138,7 +138,7 @@
             max-width: 1000px;
         }
 
-        。feature-card {
+        .feature-card {
             background: white;
             border-radius: 12px;
             padding: 1.5rem;
@@ -148,7 +148,7 @@
             transition: all 0.3s ease;
         }
 
-        。feature-card:hover {
+        .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
@@ -166,7 +166,7 @@
             font-size: 1.5rem;
         }
 
-        。feature-title {
+        .feature-title {
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
             font-weight: 600;
@@ -193,7 +193,7 @@
                 font-size: 2rem;
             }
 
-            。feature-card {
+            .feature-card {
                 width: 100%;
             }
         }
@@ -208,9 +208,7 @@
         </header>
 
         <div class="download-card">
-            <div class="version-selector" id="versionSelector">
-                <!-- 版本选择器由 JS 动态生成 -->
-            </div>
+            <div class="version-selector" id="versionSelector"></div>
             <button id="downloadBtn" class="download-btn">立即下载</button>
         </div>
 
@@ -238,17 +236,16 @@
     </footer>
 
     <script>
-        // 版本数据配置
         const versions = [
-              {
+            {
                 id: 'v0.6',
                 name: '西柿TV 0.6',
                 date: '2026',
-                description: '更换订阅地址，体验更加流畅。前面版本不可用!!!',
+                description: '更换订阅地址，体验更加流畅。前面的老版本是老订阅地址不可用!!!',
                 downloadUrl: 'https://i.uik.cc/down.php/4b54e76afd9377458b50a557985c3f6c.apk',
                 isRecommended: true
             },
-             {
+            {
                 id: 'v0.5',
                 name: '西柿TV 0.5',
                 date: '2026',
@@ -289,14 +286,13 @@
                 if (version.isRecommended) {
                     option.textContent += ' ★推荐';
                 }
-                select。appendChild(option);
+                select.appendChild(option); // ✅ 关键修复
             });
 
             const descriptionDiv = document.createElement('div');
             descriptionDiv.id = 'versionDescription';
             descriptionDiv.className = 'version-description';
 
-            // 安全取值：优先推荐，否则取第一个
             const defaultVersion = versions.find(v => v.isRecommended) || versions[0];
             descriptionDiv.textContent = defaultVersion.description;
 
@@ -313,8 +309,8 @@
 
             const downloadBtn = document.getElementById('downloadBtn');
             downloadBtn.setAttribute('data-url', defaultVersion.downloadUrl);
-            downloadBtn.addEventListener('click', function () {
-                window.location.href = this.getAttribute('data-url');
+            downloadBtn.addEventListener('click', () => {
+                window.location.href = downloadBtn.getAttribute('data-url');
             });
         }
 
