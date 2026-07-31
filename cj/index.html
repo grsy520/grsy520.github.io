@@ -146,6 +146,17 @@
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     position: relative; overflow: hidden;
+    transition: max-width .4s, height .4s;
+  }
+  /* 单个奖品时：大屏展示 */
+  .display.single-prize {
+    max-width: 560px; height: 280px;
+    border-color: rgba(201,169,110,0.25);
+    box-shadow: 0 0 60px rgba(201,169,110,0.06);
+  }
+  /* 多个奖品时：适中展示（图片仍清晰可见） */
+  .display.multi-prize {
+    max-width: 520px; height: 180px;
   }
 
   .display.rolling::before {
@@ -180,21 +191,42 @@
     font-size: 13px; color: #555; letter-spacing: 6px; margin-top: 8px;
   }
 
-  /* 结果 */
+  /* 结果 - 默认（多奖品） */
   .display .result-wrap {
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
     animation: fadeUp .6s ease;
   }
   .display .result-img {
-    width: 56px; height: 56px; border-radius: 8px; object-fit: cover;
-    border: 1px solid #222;
+    width: 80px; height: 80px; border-radius: 10px; object-fit: cover;
+    border: 1px solid #2a2a36;
   }
   .display .result-name {
-    font-size: 36px; font-weight: 700; letter-spacing: 4px;
+    font-size: 32px; font-weight: 700; letter-spacing: 4px;
     color: #f0f0f0;
   }
   .display .result-prize {
-    font-size: 14px; color: #c9a96e; letter-spacing: 2px;
+    font-size: 16px; color: #c9a96e; letter-spacing: 2px;
+  }
+  /* 单个奖品时：更大更震撼 */
+  .display.single-prize .result-img {
+    width: 140px; height: 140px; border-radius: 14px;
+    border: 1px solid rgba(201,169,110,0.2);
+  }
+  .display.single-prize .result-name {
+    font-size: 44px; letter-spacing: 6px;
+  }
+  .display.single-prize .result-prize {
+    font-size: 20px;
+  }
+  /* 多个奖品时：适中但图片仍清晰 */
+  .display.multi-prize .result-img {
+    width: 100px; height: 100px; border-radius: 12px;
+  }
+  .display.multi-prize .result-name {
+    font-size: 36px;
+  }
+  .display.multi-prize .result-prize {
+    font-size: 17px;
   }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
@@ -272,15 +304,15 @@
     text-transform: uppercase; margin-bottom: 16px;
   }
   .modal .m-img {
-    width: 72px; height: 72px; border-radius: 12px; object-fit: cover;
-    border: 1px solid #2a2a36; margin: 0 auto 16px;
+    width: 120px; height: 120px; border-radius: 14px; object-fit: cover;
+    border: 1px solid #2a2a36; margin: 0 auto 20px;
   }
   .modal .m-name {
-    font-size: 32px; font-weight: 700; color: #f0f0f0;
-    letter-spacing: 3px; margin-bottom: 8px;
+    font-size: 36px; font-weight: 700; color: #f0f0f0;
+    letter-spacing: 3px; margin-bottom: 10px;
   }
   .modal .m-prize {
-    font-size: 15px; color: #c9a96e; margin-bottom: 20px;
+    font-size: 18px; color: #c9a96e; margin-bottom: 24px;
   }
   .modal .m-notice {
     font-size: 13px; color: #888; line-height: 1.8;
@@ -304,8 +336,15 @@
     .container { padding: 32px 16px; }
     .header h1 { font-size: 22px; }
     .display { height: 100px; }
-    .display .result-name { font-size: 28px; }
+    .display.single-prize { height: 220px; }
+    .display.multi-prize { height: 150px; }
+    .display .result-name { font-size: 26px; }
+    .display.single-prize .result-name { font-size: 32px; }
+    .display.single-prize .result-img { width: 100px; height: 100px; }
+    .display.multi-prize .result-img { width: 80px; height: 80px; }
     .modal { padding: 36px 24px; min-width: 280px; }
+    .modal .m-img { width: 90px; height: 90px; }
+    .modal .m-name { font-size: 28px; }
     .prize-inputs .input-row { flex-wrap: wrap; }
   }
 </style>
@@ -415,6 +454,7 @@ function addPrize() {
   renderPrizes();
   rebuildRemain();
   updatePrizeLabel();
+  updateDisplaySize();
 }
 $('prizeInput').addEventListener('keydown', e => { if (e.key === 'Enter') addPrize(); });
 $('prizeImgInput').addEventListener('keydown', e => { if (e.key === 'Enter') addPrize(); });
@@ -424,6 +464,7 @@ function removePrize(i) {
   renderPrizes();
   rebuildRemain();
   updatePrizeLabel();
+  updateDisplaySize();
 }
 
 function renderPrizes() {
@@ -470,6 +511,17 @@ function updatePrizeLabel() {
     $('currentPrize').textContent = '已全部抽完';
   } else {
     $('currentPrize').textContent = '未设置';
+  }
+}
+
+/* 根据奖品数量动态调整显示区域大小 */
+function updateDisplaySize() {
+  const display = $('display');
+  display.classList.remove('single-prize', 'multi-prize');
+  if (prizes.length <= 1) {
+    display.classList.add('single-prize');
+  } else {
+    display.classList.add('multi-prize');
   }
 }
 
@@ -620,6 +672,7 @@ function resetAll() {
   prizes = []; names = []; winners = []; remainPrizes = [];
   renderPrizes(); renderNames(); renderRecords();
   updatePrizeLabel();
+  updateDisplaySize();
   $('display').classList.remove('rolling');
   $('display').innerHTML = '<span class="placeholder">点击开始抽奖</span>';
   $('countdown').textContent = '';
