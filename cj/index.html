@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>直播间抽奖</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #0a0a0f;
+    font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: #e8e8e8;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; top: -40vh; left: -20vw;
+    width: 70vw; height: 70vh;
+    background: radial-gradient(circle, rgba(120,80,255,0.08) 0%, transparent 70%);
+    z-index: 0; pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed; bottom: -30vh; right: -20vw;
+    width: 60vw; height: 60vh;
+    background: radial-gradient(circle, rgba(255,80,120,0.06) 0%, transparent 70%);
+    z-index: 0; pointer-events: none;
+  }
+
+  .container {
+    position: relative; z-index: 1;
+    max-width: 720px; margin: 0 auto; padding: 48px 24px;
+  }
+
+  /* 标题区 */
+  .header { text-align: center; margin-bottom: 48px; }
+  .header h1 {
+    font-size: 28px; font-weight: 300; letter-spacing: 6px;
+    color: #f0f0f0; margin-bottom: 8px;
+  }
+  .header p {
+    font-size: 13px; color: #666; letter-spacing: 2px;
+  }
+  .header .accent {
+    color: #c9a96e; font-weight: 400;
+  }
+
+  /* 通用区块 */
+  .section { margin-bottom: 36px; }
+  .section-label {
+    font-size: 12px; color: #888; letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 14px;
+    border-left: 2px solid #c9a96e; padding-left: 10px;
+  }
+
+  /* 输入框 */
+  .input-row { display: flex; gap: 10px; }
+  .input-row input {
+    flex: 1; height: 42px; padding: 0 16px;
+    background: #14141a; border: 1px solid #222;
+    border-radius: 6px; color: #e8e8e8; font-size: 14px;
+    outline: none; transition: border-color .25s;
+  }
+  .input-row input::placeholder { color: #444; }
+  .input-row input:focus { border-color: #c9a96e; }
+
+  /* 奖品输入区 - 两行 */
+  .prize-inputs { display: flex; flex-direction: column; gap: 10px; }
+  .prize-inputs .input-row { gap: 10px; }
+  .prize-tip {
+    font-size: 12px; color: #444; margin-top: 4px; letter-spacing: 1px;
+  }
+
+  /* 按钮 */
+  .btn {
+    height: 42px; padding: 0 22px; border: none; border-radius: 6px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    transition: all .25s; letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: #c9a96e; color: #0a0a0f;
+  }
+  .btn-primary:hover { background: #d4b87a; }
+  .btn-primary:disabled { background: #333; color: #666; cursor: not-allowed; }
+  .btn-outline {
+    background: transparent; color: #888;
+    border: 1px solid #333;
+  }
+  .btn-outline:hover { border-color: #666; color: #ccc; }
+  .btn-danger {
+    background: transparent; color: #555; font-size: 12px;
+    padding: 2px 8px; height: auto; border-radius: 4px;
+  }
+  .btn-danger:hover { color: #c98a8a; }
+
+  /* 标签列表 */
+  .tag-list {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;
+  }
+  .tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 4px;
+    font-size: 13px;
+  }
+  .tag-prize {
+    background: rgba(201,169,110,0.08); color: #c9a96e;
+    border: 1px solid rgba(201,169,110,0.2);
+  }
+  .tag-name {
+    background: rgba(255,255,255,0.04); color: #aaa;
+    border: 1px solid #222;
+  }
+  .tag .x {
+    cursor: pointer; opacity: .4; font-size: 14px; line-height: 1;
+  }
+  .tag .x:hover { opacity: 1; color: #c98a8a; }
+
+  .meta-info {
+    font-size: 12px; color: #555; margin-top: 12px;
+  }
+
+  /* 抽奖核心区 */
+  .lottery-box {
+    margin: 48px 0;
+    text-align: center;
+  }
+
+  .prize-label {
+    font-size: 13px; color: #888; margin-bottom: 20px;
+    letter-spacing: 2px;
+  }
+  .prize-label strong {
+    color: #c9a96e; font-weight: 500;
+  }
+
+  /* 抽奖显示屏 */
+  .display {
+    width: 100%; max-width: 480px; height: 120px;
+    margin: 0 auto 36px;
+    background: #0e0e14;
+    border: 1px solid #1c1c28;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+
+  .display.rolling::before {
+    content: '';
+    position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 3px, rgba(201,169,110,0.03) 3px, rgba(201,169,110,0.03) 6px
+    );
+    animation: scanline 8s linear infinite;
+  }
+  @keyframes scanline { 0%{background-position:0 0} 100%{background-position:0 100%} }
+
+  .display .placeholder {
+    font-size: 14px; color: #333; letter-spacing: 4px;
+  }
+
+  .display .rolling-state {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .display .rolling-state .blur-bar {
+    width: 200px; height: 4px; border-radius: 2px;
+    background: linear-gradient(90deg, transparent, rgba(201,169,110,0.5), transparent);
+    animation: blurMove 1.2s ease-in-out infinite;
+  }
+  .display .rolling-state .blur-bar:nth-child(2) { width: 140px; animation-delay: .3s; }
+  .display .rolling-state .blur-bar:nth-child(3) { width: 170px; animation-delay: .6s; }
+  @keyframes blurMove {
+    0%,100% { opacity: .3; transform: scaleX(0.8); }
+    50%     { opacity: 1;  transform: scaleX(1.1); }
+  }
+  .display .rolling-state .rolling-text {
+    font-size: 13px; color: #555; letter-spacing: 6px; margin-top: 8px;
+  }
+
+  /* 结果 */
+  .display .result-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    animation: fadeUp .6s ease;
+  }
+  .display .result-img {
+    width: 56px; height: 56px; border-radius: 8px; object-fit: cover;
+    border: 1px solid #222;
+  }
+  .display .result-name {
+    font-size: 36px; font-weight: 700; letter-spacing: 4px;
+    color: #f0f0f0;
+  }
+  .display .result-prize {
+    font-size: 14px; color: #c9a96e; letter-spacing: 2px;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 倒计时 */
+  .countdown {
+    font-size: 12px; color: #444; letter-spacing: 2px;
+    margin-top: 12px; min-height: 18px;
+  }
+  .countdown.active { color: #c9a96e; }
+
+  /* 操作按钮 */
+  .actions { display: flex; gap: 14px; justify-content: center; }
+
+  .btn-start {
+    height: 48px; padding: 0 48px; font-size: 15px;
+    background: #c9a96e; color: #0a0a0f; border: none;
+    border-radius: 8px; cursor: pointer; font-weight: 600;
+    letter-spacing: 3px; transition: all .3s;
+  }
+  .btn-start:hover { background: #d4b87a; transform: translateY(-1px); }
+  .btn-start:disabled { background: #222; color: #555; cursor: not-allowed; transform: none; }
+
+  /* 中奖记录 */
+  .record-list { display: flex; flex-direction: column; gap: 0; }
+  .record-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0; border-bottom: 1px solid #16161e;
+    gap: 10px;
+  }
+  .record-item:last-child { border-bottom: none; }
+  .record-item .r-left {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .record-item .r-thumb {
+    width: 32px; height: 32px; border-radius: 6px; object-fit: cover;
+    border: 1px solid #222; flex-shrink: 0;
+  }
+  .record-item .r-thumb-placeholder {
+    width: 32px; height: 32px; border-radius: 6px;
+    background: #16161e; border: 1px solid #222; flex-shrink: 0;
+  }
+  .record-item .r-name { font-size: 14px; color: #e0e0e0; }
+  .record-item .r-prize { font-size: 13px; color: #c9a96e; }
+  .record-item .r-time { font-size: 12px; color: #444; }
+  .empty-records {
+    text-align: center; padding: 32px 0;
+    font-size: 13px; color: #333;
+  }
+
+  /* 分隔线 */
+  .divider {
+    height: 1px; background: linear-gradient(90deg, transparent, #1a1a24, transparent);
+    margin: 36px 0;
+  }
+
+  /* 弹窗 */
+  .overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75); z-index: 100;
+    align-items: center; justify-content: center;
+    backdrop-filter: blur(6px);
+  }
+  .overlay.show { display: flex; }
+  .modal {
+    background: #111118; border: 1px solid #222;
+    border-radius: 16px; padding: 48px 56px;
+    text-align: center; min-width: 360px; max-width: 440px;
+    animation: fadeUp .5s ease;
+  }
+  .modal .m-eyebrow {
+    font-size: 12px; color: #666; letter-spacing: 4px;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .modal .m-img {
+    width: 72px; height: 72px; border-radius: 12px; object-fit: cover;
+    border: 1px solid #2a2a36; margin: 0 auto 16px;
+  }
+  .modal .m-name {
+    font-size: 32px; font-weight: 700; color: #f0f0f0;
+    letter-spacing: 3px; margin-bottom: 8px;
+  }
+  .modal .m-prize {
+    font-size: 15px; color: #c9a96e; margin-bottom: 20px;
+  }
+  .modal .m-notice {
+    font-size: 13px; color: #888; line-height: 1.8;
+    padding: 14px 18px; margin-bottom: 28px;
+    background: rgba(201,169,110,0.05);
+    border: 1px solid rgba(201,169,110,0.15);
+    border-radius: 8px;
+    letter-spacing: 1px;
+  }
+  .modal .m-notice .highlight { color: #c9a96e; }
+  .modal .btn-confirm {
+    height: 40px; padding: 0 36px; border: 1px solid #333;
+    background: transparent; color: #888; border-radius: 6px;
+    font-size: 13px; cursor: pointer; letter-spacing: 2px;
+    transition: all .25s;
+  }
+  .modal .btn-confirm:hover { border-color: #c9a96e; color: #c9a96e; }
+
+  /* 响应式 */
+  @media (max-width: 600px) {
+    .container { padding: 32px 16px; }
+    .header h1 { font-size: 22px; }
+    .display { height: 100px; }
+    .display .result-name { font-size: 28px; }
+    .modal { padding: 36px 24px; min-width: 280px; }
+    .prize-inputs .input-row { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- 头部 -->
+  <div class="header">
+    <h1>直播间抽奖</h1>
+    <p><span class="accent">生日专场</span> &nbsp;·&nbsp; 感谢每一位陪伴的家人们</p>
+  </div>
+
+  <!-- 奖品设置 -->
+  <div class="section">
+    <div class="section-label">奖品设置</div>
+    <div class="prize-inputs">
+      <div class="input-row">
+        <input id="prizeInput" type="text" placeholder="奖品名称（必填）">
+      </div>
+      <div class="input-row">
+        <input id="prizeImgInput" type="text" placeholder="奖品图片链接（可选，填图片 URL）">
+        <button class="btn btn-primary" onclick="addPrize()">添加奖品</button>
+      </div>
+    </div>
+    <div class="prize-tip">图片链接可填网络图片地址，如 https://xxx.com/prize.png，不填则只显示文字</div>
+    <div class="tag-list" id="prizeList"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 名单设置 -->
+  <div class="section">
+    <div class="section-label">参与名单</div>
+    <div class="input-row">
+      <input id="nameInput" type="text" placeholder="输入观众昵称，回车添加，逗号分隔可批量">
+      <button class="btn btn-outline" onclick="addName()">添加</button>
+    </div>
+    <div class="tag-list" id="nameList"></div>
+    <div class="meta-info" id="nameCount">共 0 人参与</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 抽奖区 -->
+  <div class="lottery-box">
+    <div class="prize-label">当前奖品：<strong id="currentPrize">未设置</strong></div>
+
+    <div class="display" id="display">
+      <span class="placeholder">点击开始抽奖</span>
+    </div>
+
+    <div class="countdown" id="countdown"></div>
+
+    <div class="actions">
+      <button class="btn-start" id="startBtn" onclick="startLottery()">开始抽奖</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 中奖记录 -->
+  <div class="section">
+    <div class="section-label">中奖记录</div>
+    <div class="record-list" id="recordList">
+      <div class="empty-records">暂无记录</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 结果弹窗 -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="m-eyebrow">恭喜中奖</div>
+    <img class="m-img" id="mImg" style="display:none" alt="奖品图片">
+    <div class="m-name" id="mName"></div>
+    <div class="m-prize" id="mPrize"></div>
+    <div class="m-notice">
+      请等待 <span class="highlight">主播私聊</span> 发放奖品<br>
+      中奖信息已记录，请耐心等候
+    </div>
+    <button class="btn-confirm" onclick="closeModal()">我知道了</button>
+  </div>
+</div>
+
+<script>
+/* ========== 数据 ========== */
+// prizes: [{name, img}]
+let prizes = [];
+let names  = [];
+let winners = []; // {name, prize, prizeImg, time}
+let remainPrizes = [];
+let isRolling = false;
+
+const $ = id => document.getElementById(id);
+
+/* ========== 奖品 ========== */
+function addPrize() {
+  const name = $('prizeInput').value.trim();
+  if (!name) return alert('请输入奖品名称');
+  const img = $('prizeImgInput').value.trim();
+  prizes.push({ name, img });
+  $('prizeInput').value = '';
+  $('prizeImgInput').value = '';
+  renderPrizes();
+  rebuildRemain();
+  updatePrizeLabel();
+}
+$('prizeInput').addEventListener('keydown', e => { if (e.key === 'Enter') addPrize(); });
+$('prizeImgInput').addEventListener('keydown', e => { if (e.key === 'Enter') addPrize(); });
+
+function removePrize(i) {
+  prizes.splice(i, 1);
+  renderPrizes();
+  rebuildRemain();
+  updatePrizeLabel();
+}
+
+function renderPrizes() {
+  $('prizeList').innerHTML = prizes.length
+    ? prizes.map((p, i) => {
+        const imgTag = p.img ? `<img src="${p.img}" style="width:16px;height:16px;border-radius:3px;object-fit:cover;vertical-align:middle;margin-right:4px;" onerror="this.style.display='none'">` : '';
+        return `<span class="tag tag-prize">${imgTag}${p.name}<span class="x" onclick="removePrize(${i})">×</span></span>`;
+      }).join('')
+    : '';
+}
+
+/* ========== 名单 ========== */
+function addName() {
+  const v = $('nameInput').value.trim();
+  if (!v) return;
+  const arr = v.split(/[,，]/).map(s => s.trim()).filter(Boolean);
+  arr.forEach(n => { if (!names.includes(n)) names.push(n); });
+  $('nameInput').value = '';
+  renderNames();
+}
+$('nameInput').addEventListener('keydown', e => { if (e.key === 'Enter') addName(); });
+
+function removeName(i) {
+  names.splice(i, 1);
+  renderNames();
+}
+
+function renderNames() {
+  $('nameList').innerHTML = names.length
+    ? names.map((n, i) => `<span class="tag tag-name">${n}<span class="x" onclick="removeName(${i})">×</span></span>`).join('')
+    : '';
+  $('nameCount').textContent = `共 ${names.length} 人参与`;
+}
+
+/* ========== 奖品队列 ========== */
+function rebuildRemain() {
+  // 每个奖品对象独立，洗牌顺序
+  remainPrizes = shuffle([...prizes]);
+}
+function updatePrizeLabel() {
+  if (remainPrizes.length > 0) {
+    $('currentPrize').textContent = remainPrizes[0].name;
+  } else if (prizes.length > 0) {
+    $('currentPrize').textContent = '已全部抽完';
+  } else {
+    $('currentPrize').textContent = '未设置';
+  }
+}
+
+/* ========== 随机算法 ========== */
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function getSecureRandom() {
+  let a = 0, b = 0, c = 0;
+  if (window.crypto && window.crypto.getRandomValues) {
+    a = window.crypto.getRandomValues(new Uint32Array(1))[0] / 0xFFFFFFFF;
+  }
+  b = Math.random();
+  c = (performance.now() % 1000) / 1000;
+  let mixed = (a * 10000) ^ (b * 10000) ^ (c * 10000);
+  return (mixed % 10000) / 10000;
+}
+
+/* ========== 抽奖（10秒） ========== */
+const ROLL_DURATION = 10000;
+
+function startLottery() {
+  if (isRolling) return;
+  if (prizes.length === 0) return alert('请先添加奖品');
+  if (names.length < 2) return alert('至少需要 2 人参与');
+
+  if (remainPrizes.length === 0) {
+    if (!confirm('所有奖品已抽完，是否重新开始？')) return;
+    rebuildRemain();
+  }
+
+  const pool = names.filter(n => !winners.some(w => w.name === n));
+  if (pool.length === 0) return alert('所有人都已中奖，请重置或添加新人');
+
+  const prize = remainPrizes.shift();
+  updatePrizeLabel();
+
+  isRolling = true;
+  $('startBtn').disabled = true;
+
+  $('display').classList.add('rolling');
+  $('display').innerHTML = `
+    <div class="rolling-state">
+      <div class="blur-bar"></div>
+      <div class="blur-bar"></div>
+      <div class="blur-bar"></div>
+      <div class="rolling-text">抽 奖 中</div>
+    </div>
+  `;
+
+  let elapsed = 0;
+  const cdEl = $('countdown');
+  cdEl.classList.add('active');
+  const cdTimer = setInterval(() => {
+    elapsed += 100;
+    const left = Math.ceil((ROLL_DURATION - elapsed) / 1000);
+    cdEl.textContent = `还有 ${left} 秒…`;
+  }, 100);
+
+  setTimeout(() => {
+    clearInterval(cdTimer);
+    cdEl.classList.remove('active');
+    cdEl.textContent = '';
+
+    const idx1 = Math.floor(getSecureRandom() * pool.length);
+    let winner = pool[idx1];
+
+    const shuffled = shuffle([...pool]);
+    const idx2 = Math.floor(getSecureRandom() * pool.length);
+    const alt = shuffled[idx2];
+    if (getSecureRandom() > 0.5) winner = alt;
+
+    isRolling = false;
+    $('startBtn').disabled = false;
+    $('display').classList.remove('rolling');
+
+    // 显示屏结果（含奖品图）
+    const imgHtml = prize.img
+      ? `<img class="result-img" src="${prize.img}" onerror="this.style.display='none'">`
+      : '';
+    $('display').innerHTML = `
+      <div class="result-wrap">
+        ${imgHtml}
+        <div class="result-name">${winner}</div>
+        <div class="result-prize">${prize.name}</div>
+      </div>
+    `;
+
+    // 记录
+    const record = {
+      name: winner,
+      prize: prize.name,
+      prizeImg: prize.img || '',
+      time: new Date().toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit',second:'2-digit'})
+    };
+    winners.push(record);
+    renderRecords();
+    updatePrizeLabel();
+
+    // 弹窗
+    $('mName').textContent = winner;
+    $('mPrize').textContent = '奖品：' + prize.name;
+    if (prize.img) {
+      $('mImg').src = prize.img;
+      $('mImg').style.display = 'block';
+    } else {
+      $('mImg').style.display = 'none';
+    }
+    $('overlay').classList.add('show');
+
+  }, ROLL_DURATION);
+}
+
+function closeModal() {
+  $('overlay').classList.remove('show');
+}
+
+/* ========== 记录 ========== */
+function renderRecords() {
+  if (winners.length === 0) {
+    $('recordList').innerHTML = '<div class="empty-records">暂无记录</div>';
+    return;
+  }
+  $('recordList').innerHTML = winners.slice().reverse().map(w => {
+    const thumb = w.prizeImg
+      ? `<img class="r-thumb" src="${w.prizeImg}" onerror="this.outerHTML='<div class=</div>'">`
+      : `<div class="r-thumb-placeholder"></div>`;
+    return `
+    <div class="record-item">
+      <div class="r-left">
+        ${thumb}
+        <span class="r-name">${w.name}</span>
+      </div>
+      <span class="r-prize">${w.prize}</span>
+      <span class="r-time">${w.time}</span>
+    </div>`;
+  }).join('');
+}
+
+/* ========== 重置 ========== */
+function resetAll() {
+  if (!confirm('确定重置全部数据？')) return;
+  prizes = []; names = []; winners = []; remainPrizes = [];
+  renderPrizes(); renderNames(); renderRecords();
+  updatePrizeLabel();
+  $('display').classList.remove('rolling');
+  $('display').innerHTML = '<span class="placeholder">点击开始抽奖</span>';
+  $('countdown').textContent = '';
+}
+</script>
+</body>
+</html>
